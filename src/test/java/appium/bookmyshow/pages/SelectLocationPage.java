@@ -47,8 +47,10 @@ public class SelectLocationPage extends AndroidGenericMethods{
         click(matchedResult);
     }
     
-    public void selectRegionByIndex(int index) throws Exception {
+    public HomePage selectRegionByIndex(int index) throws Exception {
         click(regionsList.get(index));
+        Thread.sleep(5000);
+        return new HomePage(driver);
     }
 
 }
