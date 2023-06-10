@@ -99,7 +99,7 @@ public class AndroidGenericMethods {
         element.clear();
     }
 
-    public String getElementText(WebElement element) throws Exception {
+    public String getElementText(WebElement element) {
         return element.getText();
     }
 
@@ -258,7 +258,7 @@ public class AndroidGenericMethods {
     }
     
     public void scrollToText(String text) {
-        driver.findElement(AppiumBy.androidUIAutomator("new UiScrollable(new UiSelector().scrollIntoView(text(\""+text+"\")));"));
+        driver.findElement(AppiumBy.androidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView(text(\""+text+"\"));"));
     }
 
     /**
