@@ -122,11 +122,10 @@ public class AndroidGenericMethods {
             throw new Exception("Error While Clicking on " + element, e);
         }
     }
-    
+
     public void longPressAction(WebElement element) {
-        driver.executeScript("mobile: longClickGesture", 
-                ImmutableMap.of("elementId", ((RemoteWebElement)element).getId(),
-                        "duration", 2000));
+        driver.executeScript("mobile: longClickGesture",
+                ImmutableMap.of("elementId", ((RemoteWebElement) element).getId(), "duration", 2000));
     }
 
     /**
@@ -253,12 +252,35 @@ public class AndroidGenericMethods {
      * @throws Exception
      */
     public void scrollToElement(WebElement element) throws Exception {
-        JavascriptExecutor executor = (JavascriptExecutor) driver;
-        executor.executeScript("arguments[0].scrollIntoView()", element);
+        ((JavascriptExecutor) driver).executeScript("mobile: scrollGesture", ImmutableMap.of(
+                "elementId", ((RemoteWebElement) element).getId(), "direction", "down", "percent", 0.75
+                ));
+    }
+
+    public void scrollToText(String text) {
+        driver.findElement(AppiumBy
+                .androidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView(text(\"" + text + "\"));"));
     }
     
-    public void scrollToText(String text) {
-        driver.findElement(AppiumBy.androidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView(text(\""+text+"\"));"));
+    public void scrollToGivenArea(int left, int top, int width, int height) {
+        ((JavascriptExecutor) driver).executeScript("mobile: scrollGesture", ImmutableMap.of(
+                "left", left, "top", top, "width", width, "height", height,
+                "direction", "down",
+                "percent", 3.0
+            ));
+    }
+
+    public void swipeAction(WebElement element, double percent, String direction) {
+        ((JavascriptExecutor) driver).executeScript("mobile: swipeGesture", ImmutableMap.of("elementId",
+                ((RemoteWebElement) element).getId(), "direction", direction, "percent", percent));
+    }
+    
+    public void swipeAction(int left, int top, int width, int height) {
+        ((JavascriptExecutor) driver).executeScript("mobile: swipeGesture", ImmutableMap.of(
+                "left", left, "top", top, "width", width, "height", height,
+                "direction", "left",
+                "percent", 0.75
+            ));
     }
 
     /**
