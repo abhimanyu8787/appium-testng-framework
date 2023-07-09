@@ -29,6 +29,8 @@ import com.google.common.collect.ImmutableMap;
 import io.appium.java_client.AppiumBy;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.android.nativekey.AndroidKey;
+import io.appium.java_client.android.nativekey.KeyEvent;
 import io.appium.java_client.touch.offset.PointOption;
 
 public class AndroidGenericMethods {
@@ -253,6 +255,17 @@ public class AndroidGenericMethods {
             driver.navigate().back();
         else
             driver.navigate().forward();
+    }
+    
+    public void pressKey(String key) {
+    	switch (key) {
+		case "Back":
+			driver.pressKey(new KeyEvent(AndroidKey.BACK));
+			break;
+
+		default:
+			break;
+		}
     }
 
     /**
