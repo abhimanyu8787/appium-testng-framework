@@ -98,18 +98,37 @@ public class AndroidGenericMethods {
         element.sendKeys(text);
         driver.hideKeyboard();
     }
+    
+    public void enterText(By locator, String text) throws Exception {
+        waitForElementToClick(locator, "10");
+        driver.findElement(locator).sendKeys(text);
+        driver.hideKeyboard();
+    }
 
     public void clearText(WebElement element) throws Exception {
         element.clear();
+    }
+    
+    public void clearText(By locator) throws Exception {
+        driver.findElement(locator).clear();
     }
 
     public String getElementText(WebElement element) {
         return element.getText();
     }
+    
+    public String getElementText(By locator) throws Exception {
+    	waitForElementToDisplay(locator, "10");
+        return driver.findElement(locator).getText();
+    }
 
     public String getElementAttribute(WebElement element, String attributeName) throws Exception {
-
         return element.getAttribute(attributeName);
+    }
+    
+    public String getElementAttribute(By locator, String attributeName) throws Exception {
+    	waitForElementToDisplay(locator, attributeName);
+    	return driver.findElement(locator).getAttribute(attributeName);
     }
 
     public void navigateToUrl(String url) {
@@ -118,12 +137,23 @@ public class AndroidGenericMethods {
 
     public void click(WebElement element) throws Exception {
         try {
-            waitForElementToClick(element, "60");
+            waitForElementToClick(element, "10");
             element.click();
         } catch (Exception e) {
             e.printStackTrace();
             String error = e.getMessage();
             throw new Exception("Error While Clicking on " + element, e);
+        }
+    }
+    
+    public void click(By locator) throws Exception {
+        try {
+            waitForElementToClick(locator, "10");
+            driver.findElement(locator).click();
+        } catch (Exception e) {
+            e.printStackTrace();
+            String error = e.getMessage();
+            throw new Exception("Error While Clicking on " + locator, e);
         }
     }
 
@@ -154,6 +184,13 @@ public class AndroidGenericMethods {
      */
     public void doubleClick(WebElement element, String objectName) throws Exception {
 
+        Actions action = new Actions(driver);
+        action.moveToElement(element).doubleClick().perform();
+    }
+    
+    public void doubleClick(By locator, String objectName) throws Exception {
+    	waitForElementToClick(locator, "10");
+    	element = driver.findElement(locator);
         Actions action = new Actions(driver);
         action.moveToElement(element).doubleClick().perform();
     }
@@ -202,13 +239,24 @@ public class AndroidGenericMethods {
     }
 
     public void waitForElementToDisplay(WebElement element, String duration) throws Exception {
-
+        WebDriverWait wait = (new WebDriverWait(driver, Duration.ofSeconds(Integer.parseInt(duration))));
+        wait.until(ExpectedConditions.visibilityOf(element));
+    }
+    
+    public void waitForElementToDisplay(By locator, String duration) throws Exception {
+    	element = driver.findElement(locator);
         WebDriverWait wait = (new WebDriverWait(driver, Duration.ofSeconds(Integer.parseInt(duration))));
         wait.until(ExpectedConditions.visibilityOf(element));
     }
 
     public void waitForElementToClick(WebElement element, String duration) throws Exception {
         WebDriverWait wait = (new WebDriverWait(driver, Duration.ofSeconds(Integer.parseInt(duration))));
+        wait.until(ExpectedConditions.elementToBeClickable(element));
+    }
+    
+    public void waitForElementToClick(By locator, String duration) throws Exception {
+        element = driver.findElement(locator);
+    	WebDriverWait wait = (new WebDriverWait(driver, Duration.ofSeconds(Integer.parseInt(duration))));
         wait.until(ExpectedConditions.elementToBeClickable(element));
     }
 
