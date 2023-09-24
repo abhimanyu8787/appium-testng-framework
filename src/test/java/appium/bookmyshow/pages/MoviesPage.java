@@ -42,7 +42,7 @@ public class MoviesPage extends AndroidGenericMethods{
         System.out.println("Number of languages present " +languages.size());
         for(WebElement element: languages) {
             if(getElementText(element).equalsIgnoreCase(option)) {
-                click(element);
+                clickElement(element);
                 break;
             }
         }
@@ -52,23 +52,23 @@ public class MoviesPage extends AndroidGenericMethods{
         Thread.sleep(2000);
         scrollToGivenArea(42, 519, 683, 921);
         System.out.println("Number of elements in movie list: "+ movieList.size());
-        click(movieList.get(0));
+        clickElement(movieList.get(0));
     }
     
     public void bookTicket(String format, int numberOfTickets) throws Exception {
-        click(bookTicketsButton);
+        clickElement(bookTicketsButton);
         for(WebElement element: selectMovieFormat) {
             if(getElementText(element).contains(format)) {
-                click(element);
+                clickElement(element);
                 break;
             }
         }
         Thread.sleep(2000);
         System.out.println("number of elements in time list "+movieTimings.size());
-        click(movieTimings.get(0));
+        clickElement(movieTimings.get(0));
         //select number of seats
         //click(90, 1297);
-        click(selectSeatsButton);
+        clickElement(selectSeatsButton);
         tap(887, 1500);
         Thread.sleep(5000);
         

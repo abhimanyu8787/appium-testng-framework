@@ -45,19 +45,19 @@ public class FormPage extends AndroidGenericMethods {
 
     public void setGender(String gender) throws Exception {
         if (gender.equalsIgnoreCase("Male"))
-            click(genderSelectorMale);
+            clickElement(genderSelectorMale);
         else
-            click(genderSelectorFemale);
+            clickElement(genderSelectorFemale);
     }
 
     public void selectCountry(String countryName) throws Exception {
-        click(countrySelector);
+        clickElement(countrySelector);
         scrollToText(countryName);
         driver.findElement(By.xpath("//android.widget.TextView[@text='" + countryName + "']")).click();
     }
 
     public ProductCatalogue submitForm() throws Exception {
-        click(letsShopButton);
+        clickElement(letsShopButton);
         return new ProductCatalogue(driver);
     }
 

@@ -16,7 +16,9 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -32,6 +34,7 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.nativekey.AndroidKey;
 import io.appium.java_client.android.nativekey.KeyEvent;
 import io.appium.java_client.touch.offset.PointOption;
+import io.netty.handler.timeout.TimeoutException;
 
 public class AndroidGenericMethods {
 
@@ -135,7 +138,7 @@ public class AndroidGenericMethods {
         driver.get(url);
     }
 
-    public void click(WebElement element) throws Exception {
+    public void clickElement(WebElement element) throws Exception {
         try {
             waitForElementToClick(element, "10");
             element.click();
@@ -146,7 +149,7 @@ public class AndroidGenericMethods {
         }
     }
     
-    public void click(By locator) throws Exception {
+    public void clickElement(By locator) throws Exception {
         try {
             waitForElementToClick(locator, "10");
             driver.findElement(locator).click();
@@ -489,6 +492,29 @@ public class AndroidGenericMethods {
 
     public boolean isElementDisplayed(WebElement element) {
         return element.isDisplayed();
+    }
+    
+    public boolean isElementDisplayed(By locator) {
+        return driver.findElement(locator).isDisplayed();
+    }
+    
+    public boolean waitForAllElementsToDisappear(By locator) {
+    	int attempts=0;
+    	while(attempts<3) {
+    		try {
+				WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+				List<WebElement> allElements = driver.findElements(locator);
+				return wait.until(ExpectedConditions.invisibilityOfAllElements(allElements));
+			} catch (TimeoutException e) {
+				return true;
+			} catch (StaleElementReferenceException e) {
+				//skip
+			} catch (WebDriverException e) {
+				//skip
+			}
+    		attempts++;
+    	}
+    	return false;
     }
 
 }

@@ -31,7 +31,7 @@ public class ProductCatalogue extends AndroidGenericMethods {
     }
     
     public CartPage goToCartPage() throws Exception {
-        click(cart);
+        clickElement(cart);
         Thread.sleep(2000);
         return new CartPage(driver);
     }

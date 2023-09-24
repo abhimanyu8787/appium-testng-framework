@@ -5,45 +5,38 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
 import appium.utils.AndroidGenericMethods;
+import appium.utils.EnumClass.Button;
 import io.appium.java_client.AppiumBy;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 
-public class LoginScreen extends AndroidGenericMethods {
+public class LoginScreen extends CommonScreen {
 
 	AndroidDriver driver;
-	@AndroidFindBy(id="com.goibibo:id/textView")
-	private WebElement signupMessage;
-	@AndroidFindBy(xpath = "//android.widget.TextView[@resource-id='com.goibibo:id/buttonSkip']")
-	private WebElement signupLaterBtn;
-	@AndroidFindBy(id = "com.goibibo:id/okButton")
-	private WebElement signupNowBtn;
-	@AndroidFindBy(id = "com.goibibo:id/close")
-	private WebElement adCloseBtn;
-	@AndroidFindBy(id = "com.goibibo:id/expand")
-	private WebElement adExpandBtn;
 	
-	private final By adExpandBtn2 = AppiumBy.id("com.goibibo:id/expand");
+	private final By signupMessage = AppiumBy.id("com.goibibo:id/textView");
+	private final By signupLaterBtn = AppiumBy.xpath("//android.widget.TextView[@resource-id='com.goibibo:id/buttonSkip']");
+	private final By signupNowBtn = AppiumBy.id("com.goibibo:id/okButton");
+	private final By adCloseBtn = AppiumBy.id("com.goibibo:id/close");
+	private final By adExpandBtn = AppiumBy.id("com.goibibo:id/expand");
+	private final By signupInfoMessage = AppiumBy.id("com.goibibo:id/textView");
 
 	public LoginScreen(AndroidDriver driver) {
 		super(driver);
 		this.driver = driver;
 		PageFactory.initElements(new AppiumFieldDecorator(driver), this);
 	}
-
-	public String getSignupText() {
+ 
+	public String getSignupText() throws Exception {
 		return getElementText(signupMessage);
 	}
 
 	public HomeScreen continueWithoutSignup() throws Exception {
-		Thread.sleep(2000);
+		waitForElementToDisplay(signupInfoMessage, "10");
 		pressKey("Back");
-		Thread.sleep(2000);
-		// By locator = MobileBy.AndroidUIAutomator("new UiSelector().text(\"DO IT
-		// LATER\")");
-		By buttonLocator = AppiumBy.androidUIAutomator("new UiSelector().text(\"DO IT LATER\")");
-		driver.findElement(buttonLocator).click();
+		waitForButtonViaTxt(Button.SIGNUPNOW.getOption());
+		clickButtonViaTxt(Button.SIGNUPLATER.getOption());
 		return new HomeScreen(driver);
 	}
 

@@ -46,13 +46,13 @@ public class SignupPage extends AndroidGenericMethods{
     }
     
     public TermsConditionsPage clickTermsConditions() throws Exception {
-        click(termsAndConditions);
+        clickElement(termsAndConditions);
         Thread.sleep(5000);
         return new TermsConditionsPage(driver);
     }
     
     public SelectLocationPage clickSkipButton() throws Exception {
-        click(skipButton);
+        clickElement(skipButton);
         return new SelectLocationPage(driver);
     }
     

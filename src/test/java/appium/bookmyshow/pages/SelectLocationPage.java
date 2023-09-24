@@ -39,16 +39,16 @@ public class SelectLocationPage extends AndroidGenericMethods{
     }
     
     public void clickSelectManually() throws Exception {
-        click(selectManuallyButton);
+        clickElement(selectManuallyButton);
     }
     
     public void selectCityManually(String cityName) throws Exception {
         enterText(searchForYourCityField, cityName);
-        click(matchedResult);
+        clickElement(matchedResult);
     }
     
     public HomePage selectRegionByIndex(int index) throws Exception {
-        click(regionsList.get(index));
+        clickElement(regionsList.get(index));
         Thread.sleep(8000);
         return new HomePage(driver);
     }

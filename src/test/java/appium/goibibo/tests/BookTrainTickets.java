@@ -15,13 +15,10 @@ public class BookTrainTickets extends AndroidBaseTest{
 	@Test
 	public void book_train_tickets_ui_validations() throws Exception {
 		homeScreen = loginScreen.continueWithoutSignup();
-		Thread.sleep(2000);
 		trainBookingScreen = homeScreen.selectCategoryTrain();
 		trainBookingScreen.searchTrains("Gwalior", "Jhansi");
 		trainBookingScreen.selectTrainAndClass("3A");
-		Thread.sleep(2000);
 		trainBookingScreen.addTravellerDetails("Mahi Sharma", "Female", "25" , "Lower");
-		Thread.sleep(5000);
 	}
 
 }

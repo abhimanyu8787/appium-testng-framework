@@ -44,13 +44,13 @@ public class HomePage extends AndroidGenericMethods {
         scrollToGivenArea(42, 508, 904, 571);
         Thread.sleep(2000);
         swipeAction(885, 564, 1080, 1303, "left");
-        click(movieToSelect);
+        clickElement(movieToSelect);
         Thread.sleep(4000);
     }
 
     public MoviesPage selectMoviesFromNavBar() throws Exception {
         System.out.println(moviesSection.get(1).getText());
-        click(moviesSection.get(1));
+        clickElement(moviesSection.get(1));
         return new MoviesPage(driver);
     }
 

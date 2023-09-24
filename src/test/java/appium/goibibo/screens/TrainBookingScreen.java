@@ -2,6 +2,7 @@ package appium.goibibo.screens;
 
 import java.util.List;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import appium.utils.AndroidGenericMethods;
@@ -10,7 +11,7 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 
-public class TrainBookingScreen extends AndroidGenericMethods{
+public class TrainBookingScreen extends CommonScreen{
 	
 	AndroidDriver driver;
 	
@@ -35,6 +36,15 @@ public class TrainBookingScreen extends AndroidGenericMethods{
 	@AndroidFindBy(uiAutomator = "new UiSelector().text(\"Berth Preference\")")
 	private WebElement berthPreference;
 	
+	private final By select_station_replace = AppiumBy.xpath("//android.widget.EditText[@text='replace']/following-sibling::android.widget.EditText");
+	private final By select_station_field_replace = AppiumBy.xpath("//android.widget.TextView[@text='replace']/following-sibling::*");
+	private final By switch_selected_stations_btn = AppiumBy.xpath("//android.widget.EditText[@text='From']/parent::android.view.ViewGroup/following-sibling::android.view.ViewGroup/android.widget.ImageView");
+	private final By select_date_card_replace = AppiumBy.xpath("(//*[@text='Depart']/parent::*/following-sibling::android.widget.HorizontalScrollView/*/*)[replace]");
+	private final By select_coach_train_replace = AppiumBy.xpath("//android.widget.TextView[@text='replace1']/following-sibling::android.widget.HorizontalScrollView//android.widget.TextView[@text='replace2']");
+	private final By addTraveller_fullname_field = AppiumBy.xpath("//android.widget.TextView[@text='Full name (As per govt. ID)']/parent::*");
+	private final By select_gender_radio_button_replace = AppiumBy.xpath("//android.widget.TextView[@text='replace']/parent::*");
+	private final By addTraveller_age_field = AppiumBy.xpath("//android.widget.TextView[@text='Age']/preceding-sibling::*");
+	
 	public TrainBookingScreen(AndroidDriver driver) {
 		super(driver);
 		this.driver = driver;
@@ -42,16 +52,9 @@ public class TrainBookingScreen extends AndroidGenericMethods{
 	}
 	
 	public void searchTrains(String from, String to) throws Exception {
-		fromStation.click();
-		Thread.sleep(2000);
-		enterText(selectStation, from);
-		stationSearchResult.click();
-		Thread.sleep(2000);
-		enterText(selectStation, to);
-		stationSearchResult.click();
-		journeyDate.click();
-		searchBtn.click();
-		Thread.sleep(5000);
+		waitForButtonViaTxt("Trains");
+		clickElement(replaceAndCreateCustomLocator(select_station_replace, "From"));
+		enterText(replaceAndCreateCustomLocator(select_station_field_replace, "From"), "Gwalior");
 	}
 	
 	public void selectTrainAndClass(String coachClass) {
