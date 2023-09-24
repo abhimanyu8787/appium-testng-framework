@@ -23,6 +23,8 @@ public class LoginScreen extends AndroidGenericMethods {
 	private WebElement adCloseBtn;
 	@AndroidFindBy(id = "com.goibibo:id/expand")
 	private WebElement adExpandBtn;
+	
+	private final By adExpandBtn2 = AppiumBy.id("com.goibibo:id/expand");
 
 	public LoginScreen(AndroidDriver driver) {
 		super(driver);
