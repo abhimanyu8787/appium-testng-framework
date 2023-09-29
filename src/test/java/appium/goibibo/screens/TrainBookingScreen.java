@@ -1,40 +1,14 @@
 package appium.goibibo.screens;
 
-import java.util.List;
-
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
-import appium.utils.AndroidGenericMethods;
 import io.appium.java_client.AppiumBy;
 import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 
 public class TrainBookingScreen extends CommonScreen{
 	
 	AndroidDriver driver;
-	
-	@AndroidFindBy(xpath = "//android.widget.EditText[@text='From']")
-	private WebElement fromStation;
-	@AndroidFindBy(xpath = "//android.widget.EditText[@text='To']")
-	private WebElement toStation;
-	@AndroidFindBy(xpath = "//android.widget.EditText[@text='Enter city, station name or code']")
-	private WebElement selectStation;
-	@AndroidFindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup[1]")
-	private WebElement stationSearchResult;
-	@AndroidFindBy(xpath = "//android.widget.TextView[@text='11 Jul']")
-	private WebElement journeyDate;
-	@AndroidFindBy(xpath = "//android.widget.TextView[@text='SEARCH']")
-	private WebElement searchBtn;
-	@AndroidFindBy(uiAutomator = "new UiSelector().text(\"+ Add Traveller\")")
-	private WebElement addPassengerBtn;
-	@AndroidFindBy(uiAutomator = "new UiSelector().text(\"Full name (As per govt. ID)\")")
-	private WebElement fullNameField;
-	@AndroidFindBy(uiAutomator = "new UiSelector().text(\"Age\")")
-	private WebElement ageField;
-	@AndroidFindBy(uiAutomator = "new UiSelector().text(\"Berth Preference\")")
-	private WebElement berthPreference;
 	
 	private final By select_station_replace = AppiumBy.xpath("//android.widget.EditText[@text='replace']/following-sibling::android.widget.EditText");
 	private final By select_station_field_replace = AppiumBy.xpath("//android.widget.TextView[@text='replace']/following-sibling::*");
@@ -44,6 +18,8 @@ public class TrainBookingScreen extends CommonScreen{
 	private final By addTraveller_fullname_field = AppiumBy.xpath("//android.widget.TextView[@text='Full name (As per govt. ID)']/parent::*");
 	private final By select_gender_radio_button_replace = AppiumBy.xpath("//android.widget.TextView[@text='replace']/parent::*");
 	private final By addTraveller_age_field = AppiumBy.xpath("//android.widget.TextView[@text='Age']/preceding-sibling::*");
+	private final By first_suggestion_select_station = AppiumBy.xpath("(//android.view.ViewGroup[./child::android.widget.TextView[contains(@text,'replace1')]])[replace2]");
+	private final By coach_train_name_number_replace = AppiumBy.xpath("//*[@text='replace1'and ./following-sibling::*[@text='replace2']]/following-sibling::android.widget.HorizontalScrollView//android.view.ViewGroup[./child::*[@text='replace3']]/parent::*");
 	
 	public TrainBookingScreen(AndroidDriver driver) {
 		super(driver);
@@ -52,22 +28,21 @@ public class TrainBookingScreen extends CommonScreen{
 	}
 	
 	public void searchTrains(String from, String to) throws Exception {
-		waitForButtonViaTxt("Trains");
 		clickElement(replaceAndCreateCustomLocator(select_station_replace, "From"));
-		enterText(replaceAndCreateCustomLocator(select_station_field_replace, "From"), "Gwalior");
+		enterText(replaceAndCreateCustomLocator(select_station_field_replace, "From"), from);
+		clickElement(replaceAndCreateCustomLocator(first_suggestion_select_station, from,"1"));
+		enterText(replaceAndCreateCustomLocator(select_station_field_replace, "To"), to);
+		clickElement(replaceAndCreateCustomLocator(first_suggestion_select_station, to,"1"));
 	}
 	
-	public void selectTrainAndClass(String coachClass) {
-		scrollToText(coachClass);
-		driver.findElement(AppiumBy.androidUIAutomator("new UiSelector().text(\"AVL 25\")")).click();
-		addPassengerBtn.click();
+	public void selectDateFromDisplayedCard(String cardNumber) throws Exception {
+		clickElement(replaceAndCreateCustomLocator(select_date_card_replace, cardNumber));
 	}
 	
-	public void addTravellerDetails(String fullName, String gender, String age, String berthPreferences) {
-		enterText(fullNameField, fullName);
-		enterText(ageField, age);
+	public ReviewScreen selectTrainAndClass(String trainName, String trainNumber, String coachClass) throws Exception {
+		scrollToText(trainName);
+		clickElement(replaceAndCreateCustomLocator(coach_train_name_number_replace, trainNumber, trainName, coachClass));
+		return new ReviewScreen(driver);
 	}
 	
-	
-
 }
