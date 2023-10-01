@@ -5,6 +5,7 @@ import java.net.URL;
 import java.time.Duration;
 
 import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 
 import appium.bookmyshow.pages.SignupPage;
@@ -30,7 +31,7 @@ public class AndroidBaseTest {
 		options.setDeviceName(Utility.getGlobalProperties("DeviceName"));
 		options.setApp(System.getProperty("user.dir") + "\\src\\test\\resources\\test-app\\goibibo.apk");
 		driver = new AndroidDriver(new URL(Utility.getGlobalProperties("AppiumServiceURL")), options);
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
 		String appName = Utility.getGlobalProperties("App");
 		if(appName.equalsIgnoreCase("goibibo")) {

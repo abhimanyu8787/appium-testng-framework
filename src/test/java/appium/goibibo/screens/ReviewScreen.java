@@ -26,7 +26,6 @@ public class ReviewScreen extends CommonScreen{
 		scrollToButtonViaTxt(nationality);
 		clickButtonViaTxt(nationality);
 		clickElement(replaceAndCreateCustomLocator(add_passengers_dropdown_replace, "Berth Preference"));
-		scrollToButtonViaTxt(berthPreference);
 		clickButtonViaTxt(berthPreference);
 	}
 

@@ -44,11 +44,15 @@ public class CommonScreen extends AndroidGenericMethods{
 	}
 	
 	public void scrollToButtonViaTxt(String txt) throws Exception {
-		scrollToText(txt);
+		scrollToElement(replaceAndCreateCustomLocator(btn_replace, txt));
 	}
 	
 	public void waitForLoaderToDisappear() {
 		waitForAllElementsToDisappear(progress_loader);
+	}
+	
+	public boolean getIsButtonViaTxtDisplayed(String txt) {
+		return isElementDisplayed(replaceAndCreateCustomLocator(btn_replace, txt));
 	}
 
 }

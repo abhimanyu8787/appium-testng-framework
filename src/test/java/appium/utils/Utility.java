@@ -6,6 +6,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -108,7 +110,7 @@ public class Utility {
     }
     
 
-    public List<HashMap<String, String>> getJsonDataToMap(String filePath) throws IOException {
+    public static List<HashMap<String, String>> getJsonDataToMap(String filePath) throws IOException {
         String jsonContent = FileUtils.readFileToString(new File(filePath), StandardCharsets.UTF_8);
 
         ObjectMapper mapper = new ObjectMapper();
@@ -116,6 +118,16 @@ public class Utility {
                 new TypeReference<List<HashMap<String, String>>>() {
                 });
         return data;
+    }
+    
+    public static File readFileFromTestData(String name) throws Exception {
+        File jsonFile = null;
+        try {
+            jsonFile = new File(System.getProperty("user.dir")+ "\\src\\test\\resources\\test-data\\"+name);
+        } catch (Exception e) {
+            throw new Exception("File does not exist");
+        }
+        return jsonFile;
     }
 
 }

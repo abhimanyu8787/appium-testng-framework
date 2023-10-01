@@ -1,0 +1,37 @@
+{
+    "numberOfPassengers": 4,
+    "passengerDetails": [
+        {
+            "fullName": "Mahi Sharma",
+            "gender": "Female",
+            "age": 25,
+            "nationality": "India",
+            "berthPreference": "Lower Berth",
+            "foodPreference": "Veg"
+        },
+        {
+            "fullName": "Ankita Jha",
+            "gender": "Female",
+            "age": 25,
+            "nationality": "India",
+            "berthPreference": "Lower Berth",
+            "foodPreference": "Non Veg"
+        },
+        {
+            "fullName": "Smriti Tiwari",
+            "gender": "Female",
+            "age": 25,
+            "nationality": "India",
+            "berthPreference": "Lower Berth",
+            "foodPreference": "Veg"
+        },
+        {
+            "fullName": "Anushka Sharma",
+            "gender": "Female",
+            "age": 25,
+            "nationality": "India",
+            "berthPreference": "Lower Berth",
+            "foodPreference": "Veg"
+        }
+    ]
+}

@@ -155,7 +155,15 @@ public class AndroidGenericMethods {
             driver.findElement(locator).click();
         } catch (Exception e) {
             e.printStackTrace();
-            String error = e.getMessage();
+            throw new Exception("Error While Clicking on " + locator, e);
+        }
+    }
+    
+    public void clickAlreadyDisplayedElement(By locator) throws Exception {
+    	try {
+            driver.findElement(locator).click();
+        } catch (Exception e) {
+            e.printStackTrace();
             throw new Exception("Error While Clicking on " + locator, e);
         }
     }
@@ -332,6 +340,12 @@ public class AndroidGenericMethods {
         ((JavascriptExecutor) driver).executeScript("mobile: scrollGesture", ImmutableMap.of("elementId",
                 ((RemoteWebElement) element).getId(), "direction", "down", "percent", 0.75));
     }
+    
+    public void scrollToElement(By locator) throws Exception {
+        element = driver.findElement(locator);
+    	((JavascriptExecutor) driver).executeScript("mobile: scrollGesture", ImmutableMap.of("elementId",
+                ((RemoteWebElement) element).getId(), "direction", "down", "percent", 0.75));
+    }
 
     public void scrollToText(String text) {
         driver.findElement(AppiumBy
@@ -347,10 +361,25 @@ public class AndroidGenericMethods {
         ((JavascriptExecutor) driver).executeScript("mobile: swipeGesture", ImmutableMap.of("elementId",
                 ((RemoteWebElement) element).getId(), "direction", direction, "percent", percent));
     }
+    
+    public void swipeAction(By locator, double percent, String direction) {
+        element = driver.findElement(locator);
+        ((JavascriptExecutor) driver).executeScript("mobile: swipeGesture", ImmutableMap.of("elementId",
+                ((RemoteWebElement) element).getId(), "direction", direction, "percent", percent));
+    }
 
     public void swipeAction(int left, int top, int width, int height, String direction) {
         ((JavascriptExecutor) driver).executeScript("mobile: swipeGesture", ImmutableMap.of("left", left, "top", top,
-                "width", width, "height", height, "direction", direction, "percent", 0.75));
+                "width", width, "height", height, "direction", direction, "percent", 0.99));
+    }
+    
+    public boolean canScrollMore() {
+        boolean canScrollMore = (Boolean) ((JavascriptExecutor) driver).executeScript("mobile: scrollGesture", ImmutableMap.of(
+                "left", 100, "top", 100, "width", 200, "height", 200,
+                "direction", "down",
+                "percent", 3.0
+            ));
+        return canScrollMore;
     }
 
     /**
@@ -495,7 +524,13 @@ public class AndroidGenericMethods {
     }
     
     public boolean isElementDisplayed(By locator) {
-        return driver.findElement(locator).isDisplayed();
+        boolean isDisplayed = false;
+        try {
+            isDisplayed = driver.findElement(locator).isDisplayed();
+        } catch (Exception e) {
+            isDisplayed = false;
+        }
+        return isDisplayed;
     }
     
     public boolean waitForAllElementsToDisappear(By locator) {

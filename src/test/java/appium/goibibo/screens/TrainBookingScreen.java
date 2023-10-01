@@ -20,6 +20,8 @@ public class TrainBookingScreen extends CommonScreen{
 	private final By addTraveller_age_field = AppiumBy.xpath("//android.widget.TextView[@text='Age']/preceding-sibling::*");
 	private final By first_suggestion_select_station = AppiumBy.xpath("(//android.view.ViewGroup[./child::android.widget.TextView[contains(@text,'replace1')]])[replace2]");
 	private final By coach_train_name_number_replace = AppiumBy.xpath("//*[@text='replace1'and ./following-sibling::*[@text='replace2']]/following-sibling::android.widget.HorizontalScrollView//android.view.ViewGroup[./child::*[@text='replace3']]/parent::*");
+	private final By train_card_replace = AppiumBy.xpath("//android.view.ViewGroup[./child::android.widget.TextView[contains(@text, 'replace')]]");
+	private final By scroll_area = AppiumBy.xpath("(//android.widget.ScrollView)[1]");
 	
 	public TrainBookingScreen(AndroidDriver driver) {
 		super(driver);
@@ -28,7 +30,7 @@ public class TrainBookingScreen extends CommonScreen{
 	}
 	
 	public void searchTrains(String from, String to) throws Exception {
-		clickElement(replaceAndCreateCustomLocator(select_station_replace, "From"));
+		clickAlreadyDisplayedElement(replaceAndCreateCustomLocator(select_station_replace, "From"));
 		enterText(replaceAndCreateCustomLocator(select_station_field_replace, "From"), from);
 		clickElement(replaceAndCreateCustomLocator(first_suggestion_select_station, from,"1"));
 		enterText(replaceAndCreateCustomLocator(select_station_field_replace, "To"), to);
@@ -40,9 +42,16 @@ public class TrainBookingScreen extends CommonScreen{
 	}
 	
 	public ReviewScreen selectTrainAndClass(String trainName, String trainNumber, String coachClass) throws Exception {
-		scrollToText(trainName);
-		clickElement(replaceAndCreateCustomLocator(coach_train_name_number_replace, trainNumber, trainName, coachClass));
+	    int attempt = 0;
+	    while(attempt<4) {
+	        if(!isElementDisplayed(replaceAndCreateCustomLocator(coach_train_name_number_replace, trainNumber, trainName, coachClass))) {
+	           scrollToText("2A");
+	        }else {
+	            break;
+	        }
+	        attempt++;
+	    }
+        clickElement(replaceAndCreateCustomLocator(coach_train_name_number_replace, trainNumber, trainName, coachClass));
 		return new ReviewScreen(driver);
 	}
-	
 }

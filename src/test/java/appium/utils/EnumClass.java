@@ -16,7 +16,7 @@ public class EnumClass {
 	}
 	
 	public enum BookCategory{
-		HOTELS("hotels"), FLIGHTS("flights"), TRAINS("trains"), Bus("bus");
+		HOTELS("Hotels"), FLIGHTS("Flights"), TRAINS("Trains"), BUS("Bus");
 		
 		String option;
 		
@@ -24,6 +24,20 @@ public class EnumClass {
 			this.option = button;
 		}
 		
+		public String getOption() {
+			return option;
+		}
+	}
+	
+	public enum LoginTexts{
+		SIGNIN_MESSAGE("What's your number?"), NUMBER_FIELD_PLACEHOLDER("Enter Mobile Number"), TERMS_AND_CONDITIONS("By continuing, I confirm that I have read the Cancellation Policy, User Agreement, Terms of Services and Privacy Policy of Goibibo"),
+		SIGNUP_OFFER("Sign-up and get new user benefits");
+		
+		String option;
+		
+		LoginTexts(String text){
+			this.option = text;
+		}
 		public String getOption() {
 			return option;
 		}
