@@ -42,5 +42,16 @@ public class EnumClass {
 			return option;
 		}
 	}
+	
+	public enum MakeMyTripCategoriesMajor{
+		FLIGHTS("Flights"), HOTELS("Hotels"), HOLIDAY_PACKAGES("Holiday Packages"), TRAIN_BUS("Trains/ Bus");
+		String option;
+		MakeMyTripCategoriesMajor(String text){
+			this.option = text;
+		}
+		public String getOption() {
+			return option;
+		}
+	}
 
 }
