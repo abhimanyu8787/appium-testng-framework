@@ -11,6 +11,12 @@ public class TrainsBusScreenActions extends CommonScreenActions{
 	
 	TrainsBusScreenObject trainBusScreen = new TrainsBusScreenObject();
 	
-	
+	public <T> T selectTrainAndBusOption(String option, Class<T> returnType) throws Exception {
+		clickElement(replaceAndCreateCustomLocator(trainBusScreen.trainAndBusOptions_replace, option));
+		if(returnType == TrainSearchScreenActions.class)
+			return returnType.cast(new TrainSearchScreenActions(driver));
+		else
+			return null;
+	}
 
 }

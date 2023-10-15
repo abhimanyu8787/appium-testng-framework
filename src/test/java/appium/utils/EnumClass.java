@@ -53,5 +53,19 @@ public class EnumClass {
 			return option;
 		}
 	}
+	
+	public enum MakeMytripTrainAndBusOptions{
+		BOOK_TRAIN_TICKETS("Book Trains Tickets"),BOOK_BUS_TICKETS("Book Bus Tickets"),TRIP_GURANTEE("Trip Guarantee"),CHECK_PNR_STATUS("Check PNR Status"),
+		LIVE_TRAIN_STATUS("Live Train Status"),FOOD_IN_TRAIN("Food in Train"), TRAIN_SCHEDULE("Train Schedule"),TRAIN_AVAILABILITY("Train Availability"),
+		LIVE_STATION("Live Station"), COACH_POSITION("Coach Position"), VACANT_CHART("Vacant Chart");
+		
+		String option;
+		MakeMytripTrainAndBusOptions(String text){
+			this.option = text;
+		}
+		public String getOption() {
+			return option;
+		}
+	}
 
 }

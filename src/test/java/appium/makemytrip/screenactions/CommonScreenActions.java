@@ -62,4 +62,14 @@ public class CommonScreenActions extends AndroidGenericMethods{
 	public void waitForProgressBarToDisappear() {
 		waitForAllElementsToDisappear(commonScreen.common_progressbar);
 	}
+	
+	public void scrollToMonthInCalendar(String month, String year) throws Exception {
+		//scrollToElement(replaceAndCreateCustomLocator(commonScreen.common_calendarMonth_replace, month, year));
+		scrollToText("January");
+		swipeAction(0, 499, 1080, 1977, "down");
+	}
+	
+	public void clickDateInCalendar(String month, String year, String date) throws Exception {
+		clickElement(replaceAndCreateCustomLocator(commonScreen.common_calendarDate_replace, month, year, date));
+	}
 }

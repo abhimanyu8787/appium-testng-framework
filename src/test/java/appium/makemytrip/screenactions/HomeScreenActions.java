@@ -15,11 +15,13 @@ public class HomeScreenActions extends CommonScreenActions{
 	
 	HomeScreenObject homeScreen = new HomeScreenObject();
 	
-	public Object clickMajorCategory(String categoryName) throws Exception {
+	public <T> T clickMajorCategory(String categoryName, Class<T> returnType) throws Exception {
+		System.out.println(getElementAttribute(replaceAndCreateCustomLocator(homeScreen.majorCategory_replace, categoryName), "bounds"));
 		clickElement(replaceAndCreateCustomLocator(homeScreen.majorCategory_replace, categoryName));
+		waitForProgressBarToDisappear();
 		switch (categoryName.toUpperCase()) {
-		case "TRAINS/BUS":
-			return new TrainsBusScreenActions(driver);
+		case "TRAINS/ BUS":
+			return returnType.cast(new TrainsBusScreenActions(driver));
 
 		default:
 			return null;
@@ -65,6 +67,11 @@ public class HomeScreenActions extends CommonScreenActions{
 		} catch (NotFoundException e) {
 			throw new InvalidBottomNavigationMenuOption(option + "is not found on bottom navigation menu");
 		}
+	}
+	
+	public void dismissAdvertisementPopUp() throws Exception {
+		if(isElementDisplayed(homeScreen.popUpAdvertisement))
+			clickElement(homeScreen.popUpAdvertisement_dismissBtn);
 	}
 	
 }
