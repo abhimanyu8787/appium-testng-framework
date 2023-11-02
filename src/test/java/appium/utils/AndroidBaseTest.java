@@ -12,6 +12,7 @@ import appium.bookmyshow.pages.SignupPage;
 import appium.ecommerce.pages.FormPage;
 import appium.goibibo.screens.LoginScreen;
 import appium.makemytrip.screenactions.HomeScreenActions;
+import appium.nykaa.screenactions.NykaaHomeScreenActions;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.options.UiAutomator2Options;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
@@ -24,6 +25,7 @@ public class AndroidBaseTest {
 	public SignupPage signupPage;
 	public LoginScreen loginScreen;
 	public HomeScreenActions homeScreenActions;
+	public NykaaHomeScreenActions nykaaHomeScreenActions;
 
 	@BeforeClass(alwaysRun = true)
 	public void ConfigureAppium() throws IOException, InterruptedException {
@@ -42,6 +44,8 @@ public class AndroidBaseTest {
 			loginScreen =  new LoginScreen(driver);
 		}else if(appName.equalsIgnoreCase("makemytrip")) {
 			homeScreenActions = new HomeScreenActions(driver);
+		}else if(appName.equalsIgnoreCase("nykaa")) {
+			nykaaHomeScreenActions = new NykaaHomeScreenActions(driver);
 		}
 	}
 

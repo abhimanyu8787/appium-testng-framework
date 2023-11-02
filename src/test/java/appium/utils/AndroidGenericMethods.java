@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -17,6 +18,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.StaleElementReferenceException;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
@@ -34,7 +36,6 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.nativekey.AndroidKey;
 import io.appium.java_client.android.nativekey.KeyEvent;
 import io.appium.java_client.touch.offset.PointOption;
-import io.netty.handler.timeout.TimeoutException;
 
 public class AndroidGenericMethods {
 
@@ -551,5 +552,29 @@ public class AndroidGenericMethods {
     	}
     	return false;
     }
+    
+	public void scrollToContentDesc(String contentDesc) {
+		driver.findElement(AppiumBy
+				.androidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView(new UiSelector().description(\""
+						+ contentDesc + "\"))"));
+	}
+
+	public boolean isElementClickable(By locator) throws InterruptedException {
+		try {
+			element = driver.findElement(locator);
+		} catch (Exception e) {
+			waitForSeconds(2);
+			element = driver.findElement(locator);
+		}
+		String attribute = element.getAttribute("clickable");
+		if (attribute.equalsIgnoreCase("true"))
+			return true;
+		return false;
+	}
+	
+	public void waitForSeconds(int timeInSeconds) throws InterruptedException {
+        TimeUnit.SECONDS.sleep(timeInSeconds);
+    }
+    
 
 }

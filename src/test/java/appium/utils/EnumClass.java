@@ -67,5 +67,40 @@ public class EnumClass {
 			return option;
 		}
 	}
+	
+	public enum NykaaBottomMenu{
+		BEAUTY("Beauty"), OFFERS("Offers"), CATEGORIES("Categories"), STREAM("Stream"), ACCOUNT("Account");
+		String option;
+		NykaaBottomMenu(String text){
+			this.option = text;
+		}
+		public String getOption() {
+			return option;
+		}
+	}
+	
+	public enum NykaaStoresTitle{
+		NYKAA("Your One-Stop Beauty Shop"), NYKAA_LUXE("Indulge In Luxury Beauty "), NYKAA_CROSSBORDER("Bringing international brands closer to you"), NYKAA_PRO("Go-to Place for Your Business Needs"), NYKAA_PRO_HEADING("FOR BEAUTY PROFESSIONALS");
+		String option;
+		
+		NykaaStoresTitle(String text){
+			this.option = text;
+		}
+		public String getOption() {
+			return option;
+		}
+	}
+	
+	public enum NykaaSearchBoxPlaceholders{
+		NYKAA("Search on Nykaa"), NYKAA_LUXE("Search on Nykaa LUXE"), NYKAA_CROSSBORDER("Search on Cross-Border"), NYKAA_PRO("Nykaa Pro");
+		String option;
+		
+		NykaaSearchBoxPlaceholders(String text){
+			this.option = text;
+		}
+		public String getOption() {
+			return option;
+		}
+	}
 
 }
