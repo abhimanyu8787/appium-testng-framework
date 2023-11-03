@@ -80,7 +80,7 @@ public class EnumClass {
 	}
 	
 	public enum NykaaStoresTitle{
-		NYKAA("Your One-Stop Beauty Shop"), NYKAA_LUXE("Indulge In Luxury Beauty "), NYKAA_CROSSBORDER("Bringing international brands closer to you"), NYKAA_PRO("Go-to Place for Your Business Needs"), NYKAA_PRO_HEADING("FOR BEAUTY PROFESSIONALS");
+		STORE_SELECTOR_TITLE("Select a store"),NYKAA("Your One-Stop Beauty Shop"), NYKAA_LUXE("Indulge In Luxury Beauty "), NYKAA_CROSSBORDER("Bringing international brands closer to you"), NYKAA_PRO("Go-to Place for Your Business Needs"), NYKAA_PRO_HEADING("FOR BEAUTY PROFESSIONALS");
 		String option;
 		
 		NykaaStoresTitle(String text){

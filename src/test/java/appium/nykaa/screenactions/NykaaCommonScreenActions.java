@@ -48,6 +48,7 @@ public class NykaaCommonScreenActions extends AndroidGenericMethods{
 			break;
 		case "NYKAA LUXE":
 			storeTitle = getElementText(replaceAndCreateCustomLocator(commonScreen.storeselector_storeTitle_replace, "2"));
+			break;
 		case "NYKAA CROSSBORDER":
 			storeTitle = getElementText(replaceAndCreateCustomLocator(commonScreen.storeselector_storeTitle_replace, "3"));
 			break;
@@ -67,6 +68,7 @@ public class NykaaCommonScreenActions extends AndroidGenericMethods{
 			break;
 		case "NYKAA LUXE":
 			clickElement(replaceAndCreateCustomLocator(commonScreen.storeselector_store_selector_replace, "2"));
+			break;
 		case "NYKAA CROSSBORDER":
 			clickElement(replaceAndCreateCustomLocator(commonScreen.storeselector_store_selector_replace, "3"));
 			break;
@@ -76,5 +78,9 @@ public class NykaaCommonScreenActions extends AndroidGenericMethods{
 		default:
 			throw new Exception("Invalid/Incorrect store name entered: "+storeName);
 		}
+	}
+	
+	public String getNykaProStoreHeadline() throws Exception {
+		return getElementText(commonScreen.storeselector_nykaapro_title);
 	}
 }

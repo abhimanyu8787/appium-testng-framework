@@ -33,7 +33,7 @@ public class AndroidBaseTest {
 		String port = Utility.getGlobalProperties("Port");
 		UiAutomator2Options options = new UiAutomator2Options();
 		options.setDeviceName(Utility.getGlobalProperties("DeviceName"));
-		options.setApp(System.getProperty("user.dir") + "\\src\\test\\resources\\test-app\\makemytrip.apk");
+		options.setApp(System.getProperty("user.dir") + "\\src\\test\\resources\\test-app\\nykaa.apk");
 		options.setCapability("noReset", true);
 		options.setCapability("fullReset", false);
 		driver = new AndroidDriver(new URL(Utility.getGlobalProperties("AppiumServiceURL")), options);

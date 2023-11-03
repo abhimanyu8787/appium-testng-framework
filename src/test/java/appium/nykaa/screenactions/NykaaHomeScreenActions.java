@@ -23,6 +23,7 @@ public class NykaaHomeScreenActions extends NykaaCommonScreenActions{
 	}
 	
 	public String getSearchBoxPlaceholderText() throws Exception {
+		waitForAllElementsToDisappear(homeScreen.searchbox);
 		return getElementText(homeScreen.searchbox);
 	}
 	
