@@ -44,7 +44,7 @@ public class CommonScreen extends AndroidGenericMethods{
 	}
 	
 	public void scrollToButtonViaTxt(String txt) throws Exception {
-		scrollToElement(replaceAndCreateCustomLocator(btn_replace, txt));
+		scrollToElementUsingTouchAction(replaceAndCreateCustomLocator(btn_replace, txt));
 	}
 	
 	public void waitForLoaderToDisappear() {

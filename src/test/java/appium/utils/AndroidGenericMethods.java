@@ -15,6 +15,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.StaleElementReferenceException;
@@ -124,6 +125,16 @@ public class AndroidGenericMethods {
     public String getElementText(By locator) throws Exception {
     	waitForElementToDisplay(locator, "10");
         return driver.findElement(locator).getText();
+    }
+    
+    public List<String> getElementsText(By locator) throws Exception {
+    	waitForElementToDisplay(locator, "10");
+    	List<String> elementsText = new ArrayList<String>();
+    	List<WebElement> elements = driver.findElements(locator);
+    	for(WebElement element : elements) {
+    		elementsText.add(element.getText());
+    	}
+        return elementsText;
     }
 
     public String getElementAttribute(WebElement element, String attributeName) throws Exception {
@@ -342,7 +353,7 @@ public class AndroidGenericMethods {
                 ((RemoteWebElement) element).getId(), "direction", "down", "percent", 0.75));
     }
     
-    public void scrollToElement(By locator) throws Exception {
+    public void scrollToElementUsingJavaScript(By locator) throws Exception {
         element = driver.findElement(locator);
     	((JavascriptExecutor) driver).executeScript("mobile: scrollGesture", ImmutableMap.of("elementId",
                 ((RemoteWebElement) element).getId(), "direction", "down", "percent", 0.75));
@@ -524,6 +535,16 @@ public class AndroidGenericMethods {
         return element.isDisplayed();
     }
     
+    public boolean getIsElementDisplayed(By locator) {
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+		if (!driver.findElements(locator).isEmpty()) {
+			driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(0));
+			return driver.findElement(locator).isDisplayed();
+		}
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(0));
+		return false;
+	}
+    
     public boolean isElementDisplayed(By locator) {
         boolean isDisplayed = false;
         try {
@@ -553,6 +574,14 @@ public class AndroidGenericMethods {
     	return false;
     }
     
+    public void waitForElementToAppear(By locator) throws InterruptedException {
+    	int counter = 0;
+		while (!getIsElementDisplayed(locator) && counter < 7) {
+			waitForSeconds(2);
+			counter++;
+		}
+	}
+    
 	public void scrollToContentDesc(String contentDesc) {
 		driver.findElement(AppiumBy
 				.androidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView(new UiSelector().description(\""
@@ -574,6 +603,59 @@ public class AndroidGenericMethods {
 	
 	public void waitForSeconds(int timeInSeconds) throws InterruptedException {
         TimeUnit.SECONDS.sleep(timeInSeconds);
+    }
+	
+	public void scrollToElementUsingTouchAction(By locator) {
+        boolean found = false;
+        int maxTries = 5;
+
+        while (!found && maxTries > 0) {
+            try {
+                WebElement element = driver.findElement(locator);
+                if (element.isDisplayed()) {
+                    found = true;
+                }
+            } catch (org.openqa.selenium.NoSuchElementException e) {
+                Dimension size = driver.manage().window().getSize();
+                int startX = size.getWidth() / 2;
+                int startY = (int) (size.getHeight() * 0.8); // You can adjust the startY position
+                int endY = (int) (size.getHeight() * 0.2); // You can adjust the endY position
+
+                TouchAction touchAction = new TouchAction(driver);
+                touchAction.press(PointOption.point(startX, startY))
+                        .waitAction().moveTo(PointOption.point(startX, endY))
+                        .release().perform();
+
+                maxTries--;
+            }
+        }
+
+        if (!found) {
+            throw new org.openqa.selenium.NoSuchElementException("Element not found after scrolling to the end of the page.");
+        }
+    }
+	
+	public void scrollToElementUISelector(By locator) {
+        boolean found = false;
+        int maxScrollAttempts = 10;
+
+        while (!found && maxScrollAttempts > 0) {
+            try {
+                WebElement element = driver.findElement(locator);
+                if (element.isDisplayed()) {
+                    found = true;
+                }
+            } catch (org.openqa.selenium.NoSuchElementException e) {
+                
+            	driver.findElement(AppiumBy
+                        .androidUIAutomator("new UiScrollable(new UiSelector().scrollable(true));scrollable.scrollToEnd(2);"));
+                maxScrollAttempts--;
+            }
+        }
+
+        if (!found) {
+            throw new org.openqa.selenium.NoSuchElementException("Element not found after scrolling to the end of the page.");
+        }
     }
     
 

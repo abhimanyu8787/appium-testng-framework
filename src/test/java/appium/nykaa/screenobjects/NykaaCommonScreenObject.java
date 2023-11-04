@@ -7,6 +7,8 @@ import io.appium.java_client.AppiumBy;
 public class NykaaCommonScreenObject {
 	
 	public final By common_textview_replace = AppiumBy.xpath("//android.widget.TextView[@text='replace']");
+	public final By common_widgetbutton_replace = AppiumBy.xpath("//android.widget.Button[@text='replace']");
+
 	public final By landingscreen_loader = AppiumBy.id("com.fsn.nykaa:id/progressBar");
 	public final By storeselector_heading = AppiumBy.id("com.fsn.nykaa:id/title");
 	public final By storeselector_close_icon = AppiumBy.id("com.fsn.nykaa:id/iv_title_cross");

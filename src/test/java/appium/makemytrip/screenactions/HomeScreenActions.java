@@ -33,7 +33,7 @@ public class HomeScreenActions extends CommonScreenActions{
 	}
 	
 	public void expandMinorCategory() throws Exception {
-		scrollToElement(homeScreen.minorCategory_moreBtn);
+		scrollToElementUsingTouchAction(homeScreen.minorCategory_moreBtn);
 		clickElement(homeScreen.minorCategory_moreBtn);
 	}
 	

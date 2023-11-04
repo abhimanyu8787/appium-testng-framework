@@ -10,6 +10,8 @@ import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 
 public class NykaaCommonScreenActions extends AndroidGenericMethods{
 	
+	public AndroidDriver driver;
+	
 	public NykaaCommonScreenActions(AndroidDriver driver) {
 		super(driver);
 		this.driver = driver;
@@ -78,6 +80,12 @@ public class NykaaCommonScreenActions extends AndroidGenericMethods{
 		default:
 			throw new Exception("Invalid/Incorrect store name entered: "+storeName);
 		}
+	}
+	
+	public NykaaProStoreScreenActions navigateToNykaProStore() throws Exception {
+		clickElement(replaceAndCreateCustomLocator(commonScreen.storeselector_store_selector_replace, "4"));
+		waitForLandingPageLoaderToDisappear();
+		return new NykaaProStoreScreenActions(driver);
 	}
 	
 	public String getNykaProStoreHeadline() throws Exception {

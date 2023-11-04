@@ -43,7 +43,7 @@ public class CommonScreenActions extends AndroidGenericMethods{
 	}
 	
 	public void scrollToButtonViaTxt(String txt) throws Exception {
-		scrollToElement(replaceAndCreateCustomLocator(commonScreen.common_button_replace, txt));
+		scrollToElementUsingTouchAction(replaceAndCreateCustomLocator(commonScreen.common_button_replace, txt));
 	}
 	
 	public void waitForTextView(String txt) throws Exception {
@@ -56,7 +56,7 @@ public class CommonScreenActions extends AndroidGenericMethods{
 	}
 	
 	public void scrollToTextView(String txt) throws Exception {
-		scrollToElement(replaceAndCreateCustomLocator(commonScreen.common_textview_replace, txt));
+		scrollToElementUsingTouchAction(replaceAndCreateCustomLocator(commonScreen.common_textview_replace, txt));
 	}
 	
 	public void waitForProgressBarToDisappear() {
