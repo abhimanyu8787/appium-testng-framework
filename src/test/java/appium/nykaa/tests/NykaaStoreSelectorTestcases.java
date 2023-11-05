@@ -37,4 +37,9 @@ public class NykaaStoreSelectorTestcases extends AndroidBaseTest{
 		nykaaHomeScreenActions.clickStore("Nykaa");
 		Assert.assertEquals(nykaaHomeScreenActions.getSelectStoreDropDownTitle("Nykaa"), NykaaStoresTitle.NYKAA.getOption());
 	}
+	
+	@Test
+	public void nykaa_pro_store_ui_validations() {
+		
+	}
 }
