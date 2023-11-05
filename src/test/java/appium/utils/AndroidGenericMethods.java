@@ -36,6 +36,7 @@ import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.nativekey.AndroidKey;
 import io.appium.java_client.android.nativekey.KeyEvent;
+import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.PointOption;
 
 public class AndroidGenericMethods {
@@ -657,6 +658,129 @@ public class AndroidGenericMethods {
             throw new org.openqa.selenium.NoSuchElementException("Element not found after scrolling to the end of the page.");
         }
     }
-    
+	
+	public void swipeUsingTouchAction(String direction, int duration) {
+        Dimension size = driver.manage().window().getSize();
+        int startX = size.getWidth() / 2;
+        int startY = size.getHeight() / 2;
+        int xOffset, yOffset;
+
+        switch (direction.toUpperCase()) {
+            case "UP":
+                xOffset = 0;
+                yOffset = -(size.getHeight() / 4);
+                break;
+            case "DOWN":
+                xOffset = 0;
+                yOffset = size.getHeight() / 4;
+                break;
+            case "LEFT":
+                xOffset = -(size.getWidth() / 4);
+                yOffset = 0;
+                break;
+            case "RIGHT":
+                xOffset = size.getWidth() / 4;
+                yOffset = 0;
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid swipe direction");
+        }
+
+        TouchAction touchAction = new TouchAction(driver);
+        touchAction.press(PointOption.point(startX, startY))
+                   .waitAction(WaitOptions.waitOptions(Duration.ofMillis(duration)))
+                   .moveTo(PointOption.point(startX + xOffset, startY + yOffset))
+                   .release()
+                   .perform();
+    }
+	
+	public void swipeUsingJavaScript(String direction, int duration) {
+        Dimension size = driver.manage().window().getSize();
+        int startX = size.getWidth() / 2;
+        int startY = size.getHeight() / 2;
+        int endX, endY;
+
+        switch (direction) {
+            case "UP":
+                endX = startX;
+                endY = (int) (startY - 0.4 * size.getHeight());
+                break;
+            case "DOWN":
+                endX = startX;
+                endY = (int) (startY + 0.4 * size.getHeight());
+                break;
+            case "LEFT":
+                endX = (int) (startX - 0.4 * size.getWidth());
+                endY = startY;
+                break;
+            case "RIGHT":
+                endX = (int) (startX + 0.4 * size.getWidth());
+                endY = startY;
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid swipe direction");
+        }
+
+        // Execute the swipe using JavaScript
+        JavascriptExecutor js = driver;
+        js.executeScript("mobile: swipe", 
+                "startX=" + startX, "startY=" + startY, "endX=" + endX, "endY=" + endY, "duration=" + duration);
+    }
+	
+	public boolean isElementInView(By locator) {
+		element = driver.findElement(locator);
+        if (element.isDisplayed()) {
+            Dimension screenSize = driver.manage().window().getSize();
+            int screenHeight = screenSize.getHeight();
+            int elementY = element.getLocation().getY();
+            // Check if the element's Y coordinate is within the screen height
+            return elementY >= 0 && elementY <= screenHeight;
+        }
+        return false;
+    }
+	
+	public boolean isElementInView(WebElement element) {
+        if (element.isDisplayed()) {
+            Dimension screenSize = driver.manage().window().getSize();
+            int screenHeight = screenSize.getHeight();
+            int elementY = element.getLocation().getY();
+            // Check if the element's Y coordinate is within the screen height
+            return elementY >= 0 && elementY <= screenHeight;
+        }
+        return false;
+    }
+	
+	public boolean isElementInMidView(WebElement element) {
+		Dimension screenSize = driver.manage().window().getSize();
+		int screenHeight = screenSize.getHeight();
+        int elementY = element.getLocation().getY();
+
+        // Calculate the mid Y-coordinate of the screen
+        int midY = screenHeight / 2;
+
+        // Check if the element's Y-coordinate is above the mid Y-axis
+        return elementY < midY;
+    }
+	
+	public void scrollToElementUsingSwipe(By locator) {
+		element = driver.findElement(locator);
+		System.out.println(element.getText());
+		while(!isElementInMidView(element)) {
+			swipeUsingTouchAction("UP", 1000);
+		}
+	}
+	
+	public List<String> getCurrentPackageAndActivity(){
+		List<String> packageAndActivity = new ArrayList<String>();
+		String currentPackage = driver.getCurrentPackage();
+		String currentActivity = driver.currentActivity();
+		packageAndActivity.add(currentPackage);
+		packageAndActivity.add(currentActivity);
+		return packageAndActivity;
+	}
+	
+	public void navigateToPackageAndActivity(String packageName, String activityName) {
+		//method implementation
+	}
 
 }

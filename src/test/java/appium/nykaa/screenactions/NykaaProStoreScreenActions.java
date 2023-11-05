@@ -17,10 +17,7 @@ public class NykaaProStoreScreenActions extends NykaaCommonScreenActions{
 	NykaaProStoreScreenObject nykaaProStore = new NykaaProStoreScreenObject();
 	
 	public boolean getIsApplyStepsTitleDisplayed() {
-		//scrollToElementUISelector(nykaaProStore.applyforproaccount_title);
-		scrollToText("Apply in three easy steps");
-		swipeAction(nykaaProStore.applyforproaccount_title, 0.90, "Up");
-		
+		scrollToElementUsingSwipe(nykaaProStore.applyforproaccount_title);
 		return getIsElementDisplayed(nykaaProStore.applyforproaccount_title);
 	}
 	

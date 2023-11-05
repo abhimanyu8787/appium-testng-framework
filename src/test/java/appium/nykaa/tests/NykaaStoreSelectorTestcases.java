@@ -32,11 +32,8 @@ public class NykaaStoreSelectorTestcases extends AndroidBaseTest{
 		Assert.assertEquals(nykaaHomeScreenActions.getSearchBoxPlaceholderText(), NykaaSearchBoxPlaceholders.NYKAA_CROSSBORDER.getOption(), "Verify if user is landed on nykaa crossborder store page");
 		nykaaHomeScreenActions.clickStoreSelectorDropdown();
 		nykaaProStore = nykaaHomeScreenActions.navigateToNykaProStore();
-		//user is on join nykaa pro button
-		//validate apply in three easy steps
-		boolean stepsToApply = nykaaProStore.getIsApplyStepsTitleDisplayed();
+		Assert.assertTrue(nykaaProStore.getIsApplyStepsTitleDisplayed(), "Verify that steps to apply for pro account are displayed");
 		nykaaHomeScreenActions = nykaaProStore.clickBackButtonNavigateToHome();
-		nykaaHomeScreenActions.clickStoreSelectorDropdown();
 		nykaaHomeScreenActions.clickStore("Nykaa");
 		Assert.assertEquals(nykaaHomeScreenActions.getSelectStoreDropDownTitle("Nykaa"), NykaaStoresTitle.NYKAA.getOption());
 	}
