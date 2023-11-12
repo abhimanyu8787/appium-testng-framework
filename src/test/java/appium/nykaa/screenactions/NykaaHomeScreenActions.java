@@ -27,4 +27,8 @@ public class NykaaHomeScreenActions extends NykaaCommonScreenActions{
 		return getElementText(homeScreen.searchbox);
 	}
 	
+	public void waitForNykaaLogoToBeDisplayed() throws InterruptedException {
+		waitForElementToAppear(homeScreen.nykaa_logo);
+	}
+	
 }

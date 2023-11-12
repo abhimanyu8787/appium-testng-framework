@@ -22,7 +22,6 @@ public class NykaaProStoreScreenActions extends NykaaCommonScreenActions{
 	}
 	
 	public boolean getIsAcceptableIdProofTitleDisplayed() {
-		scrollToElementUsingTouchAction(nykaaProStore.acceptableIdProof_title);
 		return getIsElementDisplayed(nykaaProStore.acceptableIdProof_title);
 	}
 	
@@ -50,6 +49,11 @@ public class NykaaProStoreScreenActions extends NykaaCommonScreenActions{
 		return getIsElementDisplayed(nykaaProStore.acceptableIdProof_GotItBtn);
 	}
 	
+	public void clickGotItButton() throws Exception {
+		waitForElementToClick(nykaaProStore.acceptableIdProof_GotItBtn, "10");
+		clickElement(nykaaProStore.acceptableIdProof_GotItBtn);
+	}
+	
 	public boolean getIsJoinNowButtonDisplayed() {
 		return getIsElementDisplayed(nykaaProStore.acceptableIdProof_joinNowBtn);
 	}
@@ -66,9 +70,7 @@ public class NykaaProStoreScreenActions extends NykaaCommonScreenActions{
 		return titles;
 	}
 	
-	public void clickViewAcceptableProofs() throws Exception {
-		clickElement(nykaaProStore.applyforproaccount_acceptableProofBtn);
-	}
+	
 	
 	public boolean getIsFAQSectionDisplayed() {
 		return getIsElementDisplayed(nykaaProStore.applyforproaccount_FAQ_title);
@@ -78,7 +80,7 @@ public class NykaaProStoreScreenActions extends NykaaCommonScreenActions{
 		List<String> questionAndAnswers = new ArrayList<String>();
 		for(int i=1; i<=5; i=i+2) {
 			String temp = "";
-			scrollToElementUISelector(replaceAndCreateCustomLocator(nykaaProStore.applyforproaccount_FAQ_question_replace, Integer.toString(i)));
+			scrollToElementUsingSwipe(replaceAndCreateCustomLocator(nykaaProStore.applyforproaccount_FAQ_question_replace, Integer.toString(i)));
 			temp += getElementText(replaceAndCreateCustomLocator(nykaaProStore.applyforproaccount_FAQ_question_replace, Integer.toString(i))) + "|";
 			clickElement(replaceAndCreateCustomLocator(nykaaProStore.applyforproaccount_FAQ_question_replace, Integer.toString(i)));
 			temp += getElementText(replaceAndCreateCustomLocator(nykaaProStore.applyforproaccount_FAQ_question_replace, Integer.toString(i+1))) + "|";
@@ -91,5 +93,22 @@ public class NykaaProStoreScreenActions extends NykaaCommonScreenActions{
 		clickElement(nykaaProStore.nykaaProBackButton);
 		return new NykaaHomeScreenActions(driver);
 	}
+	
+	public boolean getIsExclusiveOfferTitleDisplayed() throws InterruptedException {
+		scrollToElementUsingSwipe(nykaaProStore.exclusiveOffers_title);
+		return getIsElementDisplayed(nykaaProStore.exclusiveOffers_title);
+	}
+	
+	public boolean getIsProAdvantageSectionDisplayed() throws Exception {
+		waitForSeconds(4);
+		scrollToElementUsingSwipe(nykaaProStore.advantageProAccount);
+		return getIsElementDisplayed(nykaaProStore.advantageProAccount);
+	}
+	
+	public void clickViewAcceptableProofs() throws Exception {
+		scrollToElementUsingSwipe(nykaaProStore.viewAcceptableProof);
+		clickElement(nykaaProStore.viewAcceptableProof);
+	}	
+	
 
 }

@@ -349,15 +349,19 @@ public class AndroidGenericMethods {
      * @param objectName : String : Object name
      * @throws Exception
      */
-    public void scrollToElement(WebElement element) throws Exception {
-        ((JavascriptExecutor) driver).executeScript("mobile: scrollGesture", ImmutableMap.of("elementId",
-                ((RemoteWebElement) element).getId(), "direction", "down", "percent", 0.75));
+    public boolean scrollToElementUsingJavaScript(WebElement element) throws Exception {
+        boolean canScrollMore = true;
+    	canScrollMore =(Boolean) ((JavascriptExecutor) driver).executeScript("mobile: scrollGesture", ImmutableMap.of("elementId",
+                ((RemoteWebElement) element).getId(), "direction", "down", "percent", 0.50));
+    	return canScrollMore;
     }
     
-    public void scrollToElementUsingJavaScript(By locator) throws Exception {
+    public boolean scrollToElementUsingJavaScript(By locator) throws Exception {
         element = driver.findElement(locator);
-    	((JavascriptExecutor) driver).executeScript("mobile: scrollGesture", ImmutableMap.of("elementId",
-                ((RemoteWebElement) element).getId(), "direction", "down", "percent", 0.75));
+        boolean canScrollMore = true;
+        canScrollMore = (Boolean)((JavascriptExecutor) driver).executeScript("mobile: scrollGesture", ImmutableMap.of("elementId",
+                ((RemoteWebElement) element).getId(), "direction", "down", "percent", 0.50));
+        return canScrollMore;
     }
 
     public void scrollToText(String text) {
@@ -763,12 +767,26 @@ public class AndroidGenericMethods {
     }
 	
 	public void scrollToElementUsingSwipe(By locator) {
-		element = driver.findElement(locator);
-		System.out.println(element.getText());
+		
+		try {
+			element = driver.findElement(locator);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		while(!isElementInMidView(element)) {
 			swipeUsingTouchAction("UP", 1000);
 		}
 	}
+	
+	public void scrollToElementUsingJavascript(By containerLocator, By elementLocator) throws Exception {
+		element = driver.findElement(elementLocator);
+		WebElement container = driver.findElement(containerLocator);
+		boolean canScrollMore = true;
+		while(!isElementInMidView(element) && canScrollMore) {
+			canScrollMore = scrollToElementUsingJavaScript(container);
+		}
+	}
+	
 	
 	public List<String> getCurrentPackageAndActivity(){
 		List<String> packageAndActivity = new ArrayList<String>();
