@@ -13,7 +13,7 @@ public class NykaaProStoreScreenObject extends NykaaCommonScreenObject{
 	public final By exclusiveOffers_title = AppiumBy.xpath("//android.view.View[@text='MORE PRO EXCLUSIVE OFFERS']");
 	public final By advantageProAccount = AppiumBy.xpath("//android.view.View[@text='DN_BANNER_IMAGE']");
 	public final By applyforproaccount_FAQ_title = AppiumBy.xpath("//android.view.View[@text='Frequently Asked Questions']");
-	public final By applyforproaccount_FAQ_question_replace = AppiumBy.xpath("(//android.view.View[@text='Frequently Asked Questions']/following-sibling::android.view.View)[replace]");
+	public final By applyforproaccount_FAQ_question_replace = AppiumBy.xpath("(//android.view.View[@text='Frequently Asked Questions']/following-sibling::android.view.View)[replace]/*[@index=0]");
 	public final By applyforproaccount_FAQ_question_dropdown_replace = AppiumBy.xpath("(//android.view.View[@text='Frequently Asked Questions']/following-sibling::android.view.View)[replace]");
 	public final By applyforproaccount_FAQ_answer_replace = AppiumBy.xpath("(//android.view.View[@text='Frequently Asked Questions']/following-sibling::android.view.View)[replace]");
 	

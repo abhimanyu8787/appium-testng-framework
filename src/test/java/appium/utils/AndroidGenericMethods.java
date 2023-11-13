@@ -157,7 +157,6 @@ public class AndroidGenericMethods {
             element.click();
         } catch (Exception e) {
             e.printStackTrace();
-            String error = e.getMessage();
             throw new Exception("Error While Clicking on " + element, e);
         }
     }
@@ -329,14 +328,16 @@ public class AndroidGenericMethods {
             driver.navigate().forward();
     }
     
-    public void pressKey(String key) {
+    public void pressKey(String key) throws Exception {
     	switch (key) {
 		case "Back":
 			driver.pressKey(new KeyEvent(AndroidKey.BACK));
 			break;
-
-		default:
+		case "Search":
+			driver.pressKey(new KeyEvent(AndroidKey.SEARCH));
 			break;
+		default:
+			throw new Exception("Unsupported Key Provided");
 		}
     }
 

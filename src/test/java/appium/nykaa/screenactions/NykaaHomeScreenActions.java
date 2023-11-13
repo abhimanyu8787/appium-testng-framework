@@ -1,9 +1,6 @@
 package appium.nykaa.screenactions;
 
-import org.openqa.selenium.By;
-
 import appium.nykaa.screenobjects.NykaaHomeScreenObject;
-import io.appium.java_client.AppiumBy;
 import io.appium.java_client.android.AndroidDriver;
 
 public class NykaaHomeScreenActions extends NykaaCommonScreenActions{
@@ -23,12 +20,26 @@ public class NykaaHomeScreenActions extends NykaaCommonScreenActions{
 	}
 	
 	public String getSearchBoxPlaceholderText() throws Exception {
-		waitForAllElementsToDisappear(homeScreen.searchbox);
+		waitForElementToAppear(homeScreen.searchbox);
 		return getElementText(homeScreen.searchbox);
 	}
 	
 	public void waitForNykaaLogoToBeDisplayed() throws InterruptedException {
 		waitForElementToAppear(homeScreen.nykaa_logo);
+	}
+	
+	public NykaaProductListScreenActions searchForProduct(String query) throws Exception {
+		clickElement(homeScreen.searchbox);
+		enterText(homeScreen.searchField, query);
+		pressKey("Search");
+		waitForLandingPageLoaderToDisappear();
+		waitForNykaaLogoToBeDisplayed();
+		return new NykaaProductListScreenActions(driver);
+	}
+	
+	public NykaaShoppingBagScreenActions navigateToShoppingBag() throws Exception {
+		clickElement(homeScreen.shoppingBag);
+		return new NykaaShoppingBagScreenActions(driver);
 	}
 	
 }

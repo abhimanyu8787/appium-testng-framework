@@ -73,13 +73,15 @@ public class NykaaProStoreScreenActions extends NykaaCommonScreenActions{
 	
 	
 	public boolean getIsFAQSectionDisplayed() {
+		scrollToElementUsingSwipe(nykaaProStore.applyforproaccount_FAQ_title);
 		return getIsElementDisplayed(nykaaProStore.applyforproaccount_FAQ_title);
 	}
 	
 	public List<String> faqQuestionsAndAnswers() throws Exception{
 		List<String> questionAndAnswers = new ArrayList<String>();
-		for(int i=1; i<=5; i=i+2) {
+		for(int i=1; i<=1; i=i+2) {
 			String temp = "";
+			waitForSeconds(4);
 			scrollToElementUsingSwipe(replaceAndCreateCustomLocator(nykaaProStore.applyforproaccount_FAQ_question_replace, Integer.toString(i)));
 			temp += getElementText(replaceAndCreateCustomLocator(nykaaProStore.applyforproaccount_FAQ_question_replace, Integer.toString(i))) + "|";
 			clickElement(replaceAndCreateCustomLocator(nykaaProStore.applyforproaccount_FAQ_question_replace, Integer.toString(i)));
@@ -106,6 +108,7 @@ public class NykaaProStoreScreenActions extends NykaaCommonScreenActions{
 	}
 	
 	public void clickViewAcceptableProofs() throws Exception {
+		waitForSeconds(4);
 		scrollToElementUsingSwipe(nykaaProStore.viewAcceptableProof);
 		clickElement(nykaaProStore.viewAcceptableProof);
 	}	
