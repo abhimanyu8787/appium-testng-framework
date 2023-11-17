@@ -28,5 +28,7 @@ public class NykaaShoppingBagScreenActions extends NykaaCommonScreenActions{
 			waitForElementToAppear(nykaaShoppingBag.emptyBagMessage);
 		}
 	}
+	
+	
 
 }

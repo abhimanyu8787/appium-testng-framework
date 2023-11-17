@@ -50,5 +50,11 @@ public class NykaaProductListScreenActions extends NykaaCommonScreenActions{
 		scrollToProduct(productIndex);
 		clickElement(replaceAndCreateCustomLocator(nykaaProductListScreen.productCardAddToWishlistBtn_replace, productIndex));
 	}
+	
+	public NykaaProductPageScreenActions clickProduct(String productIndex) throws Exception {
+		scrollToProduct(productIndex);
+		clickElement(replaceAndCreateCustomLocator(nykaaProductListScreen.productCardImage_replace, productIndex));
+		return new NykaaProductPageScreenActions(driver);
+	}
 
 }

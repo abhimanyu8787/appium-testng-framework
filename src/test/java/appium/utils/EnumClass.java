@@ -102,5 +102,16 @@ public class EnumClass {
 			return option;
 		}
 	}
+	
+	public enum AndroidDeviceButtons{
+		BACK("Back"), RECENT_APP("Recent Apps"), SEARCH("Search");
+		String option;
+		AndroidDeviceButtons(String text){
+			this.option = text;
+		}
+		public String getOption() {
+			return option;
+		}
+	}
 
 }

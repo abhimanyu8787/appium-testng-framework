@@ -336,6 +336,9 @@ public class AndroidGenericMethods {
 		case "Search":
 			driver.pressKey(new KeyEvent(AndroidKey.SEARCH));
 			break;
+		case "Recent Apps":
+			driver.pressKey(new KeyEvent(AndroidKey.APP_SWITCH));
+			break;
 		default:
 			throw new Exception("Unsupported Key Provided");
 		}
@@ -800,6 +803,22 @@ public class AndroidGenericMethods {
 	
 	public void navigateToPackageAndActivity(String packageName, String activityName) {
 		//method implementation
+	}
+	
+	public void lockDevice() {
+		driver.lockDevice();
+	}
+	
+	public void lockDevice(long seconds) {
+		driver.lockDevice(Duration.ofSeconds(seconds));
+	}
+	
+	public boolean isDeviceLocked() {
+		return driver.isDeviceLocked();
+	}
+	
+	public void unlockDevice() {
+		driver.unlockDevice();
 	}
 
 }

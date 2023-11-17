@@ -1,6 +1,7 @@
 package appium.nykaa.screenactions;
 
 import appium.nykaa.screenobjects.NykaaHomeScreenObject;
+import appium.utils.EnumClass.AndroidDeviceButtons;
 import io.appium.java_client.android.AndroidDriver;
 
 public class NykaaHomeScreenActions extends NykaaCommonScreenActions{
@@ -31,7 +32,8 @@ public class NykaaHomeScreenActions extends NykaaCommonScreenActions{
 	public NykaaProductListScreenActions searchForProduct(String query) throws Exception {
 		clickElement(homeScreen.searchbox);
 		enterText(homeScreen.searchField, query);
-		pressKey("Search");
+		clickElement(homeScreen.searchbox);
+		pressKey(AndroidDeviceButtons.SEARCH.getOption());
 		waitForLandingPageLoaderToDisappear();
 		waitForNykaaLogoToBeDisplayed();
 		return new NykaaProductListScreenActions(driver);
