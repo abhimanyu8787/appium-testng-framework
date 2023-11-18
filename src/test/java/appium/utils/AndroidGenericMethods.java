@@ -339,6 +339,9 @@ public class AndroidGenericMethods {
 		case "Recent Apps":
 			driver.pressKey(new KeyEvent(AndroidKey.APP_SWITCH));
 			break;
+		case "Enter":
+			driver.pressKey(new KeyEvent(AndroidKey.ENTER));
+			break;
 		default:
 			throw new Exception("Unsupported Key Provided");
 		}
@@ -819,6 +822,25 @@ public class AndroidGenericMethods {
 	
 	public void unlockDevice() {
 		driver.unlockDevice();
+	}
+	
+	public void clickSearchButtonKeyboard() {
+		driver.executeScript("mobile: performEditorAction", ImmutableMap.of("action", "search"));
+	}
+	
+	public void clickGesture(int x, int y) {
+		((JavascriptExecutor) driver).executeScript("mobile: clickGesture", ImmutableMap.of(
+			    "x", x, "y", y
+			));
+	}
+	
+	public void tapAtCenterOfScreen() {
+		Dimension dimension = driver.manage().window().getSize();
+		int y = dimension.getHeight();
+		int x = dimension.getWidth();
+		int midPointX = x/2;
+		int midPointY = y/2;
+		clickGesture(midPointX, midPointY);
 	}
 
 }

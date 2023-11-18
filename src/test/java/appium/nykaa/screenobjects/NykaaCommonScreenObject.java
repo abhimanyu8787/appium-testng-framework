@@ -15,4 +15,6 @@ public class NykaaCommonScreenObject {
 	public final By storeselector_storeTitle_replace = AppiumBy.xpath("(//android.widget.TextView[@resource-id='com.fsn.nykaa:id/store_title'])[replace]");
 	public final By storeselector_store_selector_replace = AppiumBy.xpath("(//android.widget.ImageView[@resource-id='com.fsn.nykaa:id/next'])[replace]");
 	public final By storeselector_nykaapro_title = AppiumBy.id("com.fsn.nykaa:id/title");
+	public final By shoppingBag = AppiumBy.id("com.fsn.nykaa:id/action_shopping_cart");
+
 }

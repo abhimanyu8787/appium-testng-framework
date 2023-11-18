@@ -56,7 +56,7 @@ public class AndroidBaseTest {
 			homeScreenActions = new HomeScreenActions(driver);
 		}else if(appName.equalsIgnoreCase("nykaa")) {
 			nykaaHomeScreenActions = new NykaaHomeScreenActions(driver);
-			nykaaHomeScreenActions.waitForLandingPageLoaderToDisappear();
+			nykaaHomeScreenActions.waitForNykaaLoaderToDisappear();
 			nykaaHomeScreenActions.waitForNykaaLogoToBeDisplayed();
 		}
 	}

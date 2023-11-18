@@ -13,6 +13,7 @@ public class NykaaProductListScreenActions extends NykaaCommonScreenActions{
 	}
 	
 	public String getShoppingPageSearchTitle() throws Exception {
+		waitForElementToAppear(nykaaProductListScreen.productListPageHeading);
 		return getElementText(nykaaProductListScreen.productListPageHeading);
 	}
 	
@@ -27,14 +28,17 @@ public class NykaaProductListScreenActions extends NykaaCommonScreenActions{
 	public ProductCard getProductCardDetails(String productIndex) throws Exception {
 		ProductCard product = new ProductCard();
 		scrollToProduct(productIndex);
-		String productName = getElementText(replaceAndCreateCustomLocator(nykaaProductListScreen.productCardTitle_replace, productIndex));
+		String productName = getElementText(replaceAndCreateCustomLocator(nykaaProductListScreen.productCardName_replace, productIndex));
+		String productBrand = getElementText(replaceAndCreateCustomLocator(nykaaProductListScreen.productCardBrand_replace, productIndex));
 		String productPrice = getElementText(replaceAndCreateCustomLocator(nykaaProductListScreen.productCardPrice_replace, productIndex));
+		String productOrignalPrice = getElementText(replaceAndCreateCustomLocator(nykaaProductListScreen.productCardOrignalPrice_replace, productIndex));
 		String productDiscountPercentage = getElementText(replaceAndCreateCustomLocator(nykaaProductListScreen.productCardDiscount_replace, productIndex));
 		String productRating = getElementText(replaceAndCreateCustomLocator(nykaaProductListScreen.productCardStarRating_replace, productIndex));
-		String productRatingCount = getElementText(replaceAndCreateCustomLocator(nykaaProductListScreen.productCardStarRating_replace, productIndex));
+		String productRatingCount = getElementText(replaceAndCreateCustomLocator(nykaaProductListScreen.productCardRatingCount_replace, productIndex));
 		product.setProductTitle(productName);
-		product.setProductPriceOrignal(productPrice.split(" ")[1]);
-		product.setProductPriceAfterDiscount(productPrice.split(" ")[0]);
+		product.setProductBrand(productBrand);
+		product.setProductPriceOrignal(productOrignalPrice);
+		product.setProductPriceAfterDiscount(productPrice);
 		product.setProductDiscountPercentage(productDiscountPercentage);
 		product.setProductRating(productRating);
 		product.setProductRatingCount(productRatingCount);

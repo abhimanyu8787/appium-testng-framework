@@ -104,7 +104,7 @@ public class EnumClass {
 	}
 	
 	public enum AndroidDeviceButtons{
-		BACK("Back"), RECENT_APP("Recent Apps"), SEARCH("Search");
+		BACK("Back"), RECENT_APP("Recent Apps"), SEARCH("Search"), ENTER("Enter");
 		String option;
 		AndroidDeviceButtons(String text){
 			this.option = text;

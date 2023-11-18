@@ -31,15 +31,15 @@ public class NykaaStoreSelectorTestcases extends AndroidBaseTest{
 		Assert.assertEquals(nykaaHomeScreenActions.getSelectStoreDropDownTitle("Nykaa Crossborder"), NykaaStoresTitle.NYKAA_CROSSBORDER.getOption());
 		Assert.assertEquals(nykaaHomeScreenActions.getSelectStoreDropDownTitle("Nykaa Pro"), NykaaStoresTitle.NYKAA_PRO.getOption());
 		nykaaHomeScreenActions.clickStore("Nykaa Luxe");
-		nykaaHomeScreenActions.waitForLandingPageLoaderToDisappear();
+		nykaaHomeScreenActions.waitForNykaaLoaderToDisappear();
 		Assert.assertEquals(nykaaHomeScreenActions.getSearchBoxPlaceholderText(), NykaaSearchBoxPlaceholders.NYKAA_LUXE.getOption(), "Verify if user is landed on nykaa luxe store page");
 		nykaaHomeScreenActions.clickStoreSelectorDropdown();
 		nykaaHomeScreenActions.clickStore("Nykaa Crossborder");
-		nykaaHomeScreenActions.waitForLandingPageLoaderToDisappear();
+		nykaaHomeScreenActions.waitForNykaaLoaderToDisappear();
 		Assert.assertEquals(nykaaHomeScreenActions.getSearchBoxPlaceholderText(), NykaaSearchBoxPlaceholders.NYKAA_CROSSBORDER.getOption(), "Verify if user is landed on nykaa crossborder store page");
 		nykaaHomeScreenActions.clickStoreSelectorDropdown();
 		nykaaProStore = nykaaHomeScreenActions.navigateToNykaProStore();
-		nykaaProStore.waitForLandingPageLoaderToDisappear();
+		nykaaProStore.waitForNykaaLoaderToDisappear();
 		Assert.assertTrue(nykaaProStore.getIsApplyStepsTitleDisplayed(), "Verify that steps to apply for pro account are displayed");
 		nykaaHomeScreenActions = nykaaProStore.clickBackButtonNavigateToHome();
 	}
@@ -49,7 +49,7 @@ public class NykaaStoreSelectorTestcases extends AndroidBaseTest{
 		Assert.assertEquals(nykaaHomeScreenActions.getSearchBoxPlaceholderText(), NykaaSearchBoxPlaceholders.NYKAA.getOption(), "Verify if user is landed on nykaa store page");
 		nykaaHomeScreenActions.clickStoreSelectorDropdown();
 		nykaaProStore = nykaaHomeScreenActions.navigateToNykaProStore();
-		nykaaProStore.waitForLandingPageLoaderToDisappear();
+		nykaaProStore.waitForNykaaLoaderToDisappear();
 		nykaaProStore.clickViewAcceptableProofs();
 		Assert.assertTrue(nykaaProStore.getIsAcceptableIdProofTitleDisplayed(),"Verify if submenu title is displayed");
 		Assert.assertTrue(nykaaProStore.getIsBusinessProofTitleDisplayed(),"Verify if business proof title is displayed");
@@ -72,7 +72,7 @@ public class NykaaStoreSelectorTestcases extends AndroidBaseTest{
 		Assert.assertEquals(nykaaHomeScreenActions.getSearchBoxPlaceholderText(), NykaaSearchBoxPlaceholders.NYKAA.getOption(), "Verify if user is landed on nykaa store page");
 		nykaaHomeScreenActions.clickStoreSelectorDropdown();
 		nykaaProStore = nykaaHomeScreenActions.navigateToNykaProStore();
-		nykaaProStore.waitForLandingPageLoaderToDisappear();
+		nykaaProStore.waitForNykaaLoaderToDisappear();
 		Assert.assertTrue(nykaaProStore.getIsFAQSectionDisplayed());
 		List<String> displayedFAQ = nykaaProStore.faqQuestionsAndAnswers();
 		Assert.assertEquals(displayedFAQ.get(0).split("\\|")[0], "1. What is Nykaa PRO?");
@@ -84,14 +84,31 @@ public class NykaaStoreSelectorTestcases extends AndroidBaseTest{
 		nykaaShoppingBag = nykaaHomeScreenActions.navigateToShoppingBag();
 		nykaaShoppingBag.clearCart();
 		nykaaShoppingBag.pressKey(AndroidDeviceButtons.BACK.getOption());
-		nykaaHomeScreenActions.waitForLandingPageLoaderToDisappear();
+		nykaaHomeScreenActions.waitForNykaaLoaderToDisappear();
 		nykaaProductList = nykaaHomeScreenActions.searchForProduct("Beauty Blender");
 		Assert.assertEquals("Beauty Blender", nykaaProductList.getShoppingPageSearchTitle(), "Search query should be displayed at top");
 		ProductCard beautyBlender = nykaaProductList.getProductCardDetails("1");
+		System.out.println(beautyBlender.toString());
 		nykaaProductPage = nykaaProductList.clickProduct("1");
-		nykaaProductPage.waitForLandingPageLoaderToDisappear();
+		nykaaProductPage.waitForNykaaLoaderToDisappear();
 		String displayedProductTitle = nykaaProductPage.getProductName();
-		Assert.assertEquals(beautyBlender.getProductTitle(), displayedProductTitle, "Product Name is in sync");
+		String displayedProductRating = nykaaProductPage.getRatingStars();
+		//String displayedProductRatingCount = nykaaProductPage.getRatingCount();
+		Assert.assertEquals(beautyBlender.getProductBrand()+" "+beautyBlender.getProductTitle(), displayedProductTitle, "Product name is in sync");
+		Assert.assertEquals(beautyBlender.getProductRating(), displayedProductRating, "Product rating is in sync");
+		//Assert.assertEquals(beautyBlender.getProductRatingCount(), displayedProductRatingCount, "Product rating count is in sync");
+		nykaaProductPage.addProductToBag();
+		nykaaShoppingBag = nykaaProductPage.navigateToShoppingBag();
+		String finalCartValue = beautyBlender.getProductPriceAfterDiscount().substring(1);
+		if(Integer.parseInt(finalCartValue)<299) {
+			Assert.assertTrue(nykaaShoppingBag.getIfShippingChargeWarningMessageDisplayed(),"Save shipping tooltipe should be displayed when cart value is less than 299");
+			nykaaShoppingBag.tapAtCenterOfScreen();
+		}
+		List<String> productsName = nykaaShoppingBag.getProductsName();
+		List<String> productsPrice = nykaaShoppingBag.getProductsPrice();
+		List<String> productsFinalPrice = nykaaShoppingBag.getProductsFinalPrice();
+		
+		
 	}
 	
 }

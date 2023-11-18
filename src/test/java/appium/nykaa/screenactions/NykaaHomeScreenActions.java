@@ -1,7 +1,6 @@
 package appium.nykaa.screenactions;
 
 import appium.nykaa.screenobjects.NykaaHomeScreenObject;
-import appium.utils.EnumClass.AndroidDeviceButtons;
 import io.appium.java_client.android.AndroidDriver;
 
 public class NykaaHomeScreenActions extends NykaaCommonScreenActions{
@@ -31,17 +30,11 @@ public class NykaaHomeScreenActions extends NykaaCommonScreenActions{
 	
 	public NykaaProductListScreenActions searchForProduct(String query) throws Exception {
 		clickElement(homeScreen.searchbox);
+		waitForSeconds(2);
 		enterText(homeScreen.searchField, query);
-		clickElement(homeScreen.searchbox);
-		pressKey(AndroidDeviceButtons.SEARCH.getOption());
-		waitForLandingPageLoaderToDisappear();
-		waitForNykaaLogoToBeDisplayed();
+		clickSearchButtonKeyboard();
+		waitForNykaaLoaderToDisappear();
 		return new NykaaProductListScreenActions(driver);
-	}
-	
-	public NykaaShoppingBagScreenActions navigateToShoppingBag() throws Exception {
-		clickElement(homeScreen.shoppingBag);
-		return new NykaaShoppingBagScreenActions(driver);
 	}
 	
 }

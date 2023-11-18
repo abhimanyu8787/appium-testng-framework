@@ -34,7 +34,7 @@ public class NykaaCommonScreenActions extends AndroidGenericMethods{
 		return By.xpath(str.split("By.xpath:")[1].trim());
 	}
 	
-	public void waitForLandingPageLoaderToDisappear() {
+	public void waitForNykaaLoaderToDisappear() {
 		waitForAllElementsToDisappear(commonScreen.landingscreen_loader);
 	}
 	
@@ -84,11 +84,16 @@ public class NykaaCommonScreenActions extends AndroidGenericMethods{
 	
 	public NykaaProStoreScreenActions navigateToNykaProStore() throws Exception {
 		clickElement(replaceAndCreateCustomLocator(commonScreen.storeselector_store_selector_replace, "4"));
-		waitForLandingPageLoaderToDisappear();
+		waitForNykaaLoaderToDisappear();
 		return new NykaaProStoreScreenActions(driver);
 	}
 	
 	public String getNykaProStoreHeadline() throws Exception {
 		return getElementText(commonScreen.storeselector_nykaapro_title);
+	}
+	
+	public NykaaShoppingBagScreenActions navigateToShoppingBag() throws Exception {
+		clickElement(commonScreen.shoppingBag);
+		return new NykaaShoppingBagScreenActions(driver);
 	}
 }

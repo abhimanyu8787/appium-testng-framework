@@ -3,6 +3,7 @@ package appium.nykaa.pojos;
 public class ProductCard {
 	
 	private String productTitle;
+	private String productBrand;
 	private String productPriceOrignal;
 	private String productPriceAfterDiscount;
 	private String productDiscountPercentage;
@@ -11,6 +12,12 @@ public class ProductCard {
 	
 	public String getProductTitle() {
 		return productTitle;
+	}
+	public String getProductBrand() {
+		return productBrand;
+	}
+	public void setProductBrand(String productBrand) {
+		this.productBrand = productBrand;
 	}
 	public void setProductTitle(String productTitle) {
 		this.productTitle = productTitle;
@@ -44,6 +51,14 @@ public class ProductCard {
 	}
 	public void setProductRatingCount(String productRatingCount) {
 		this.productRatingCount = productRatingCount;
+	}
+	
+	@Override
+	public String toString() {
+		return "ProductCard [productTitle=" + productTitle + ", productBrand=" + productBrand + ", productPriceOrignal="
+				+ productPriceOrignal + ", productPriceAfterDiscount=" + productPriceAfterDiscount
+				+ ", productDiscountPercentage=" + productDiscountPercentage + ", productRating=" + productRating
+				+ ", productRatingCount=" + productRatingCount + "]";
 	}
 
 }
