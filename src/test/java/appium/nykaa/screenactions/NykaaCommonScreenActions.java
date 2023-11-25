@@ -5,6 +5,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import appium.nykaa.screenobjects.NykaaCommonScreenObject;
 import appium.utils.AndroidGenericMethods;
+import appium.utils.EnumClass.NykaaBottomMenu;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 
@@ -96,4 +97,38 @@ public class NykaaCommonScreenActions extends AndroidGenericMethods{
 		clickElement(commonScreen.shoppingBag);
 		return new NykaaShoppingBagScreenActions(driver);
 	}
+	
+	public boolean getIsGoldMembershipAdDisplayed() {
+		return isElementDisplayed(commonScreen.goldMembershipCrownIcon)
+				&& isElementDisplayed(commonScreen.goldMembershipCrownIcon);
+	}
+	
+	public void closeGoldMemberShipPopup() throws Exception {
+		clickElement(commonScreen.crossIconGoldMembershipAd);
+	}
+	
+	public void closeUnwantedPopup() throws Exception {
+		if(getIsGoldMembershipAdDisplayed()) {
+			closeGoldMemberShipPopup();
+		}
+	}
+	
+	public void clickTextViewBtnViaText(String text) throws Exception {
+		clickElement(replaceAndCreateCustomLocator(commonScreen.common_textview_replace, text));
+	}
+	
+	public void scrollToTextViewBtnViaText(String text) {
+		scrollToElementUsingSwipe(replaceAndCreateCustomLocator(commonScreen.common_textview_replace, text));
+	}
+	
+	public <T> T clickBottomMenu(String menuOption, Class<T> returnScreenActionClass) throws Exception {
+		clickTextViewBtnViaText(menuOption);
+		switch (menuOption.toUpperCase()) {
+		case "ACCOUNT":
+			return returnScreenActionClass.cast(new NykaaAccountsScreenActions(driver));
+		default:
+			return null;
+		}
+	}
+	
 }

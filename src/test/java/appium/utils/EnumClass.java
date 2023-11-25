@@ -113,5 +113,18 @@ public class EnumClass {
 			return option;
 		}
 	}
+	
+	public enum NykaaAccountsMenu{
+		ORDERS("Orders"), MY_COUPONS("My Coupons"), WALLET("Wallet"), NYKAA_MEMBER_SECTION("Nykaa Privé")
+		, BEAUTY_PORTFOLIO("Beauty Portfolio"), WISHLIST("Wishlist"), HELP("Help and Support"), ADDRESS("Addresses")
+		, PAYMENT_METHODS("Payment Methods"), PROFILE("Profile");
+		String option;
+		NykaaAccountsMenu(String text){
+			this.option = text;
+		}
+		public String getOption() {
+			return option;
+		}
+	}
 
 }

@@ -794,6 +794,19 @@ public class AndroidGenericMethods {
 		}
 	}
 	
+	public void scrollToElementNotDisplayedInView(By elementLocator) throws Exception {
+		boolean canScrollMore = true;
+		int attempt = 0;
+		while(canScrollMore && attempt < 10) {
+			if(!isElementDisplayed(elementLocator)) {
+				swipeUsingTouchAction("UP", 1000);
+				attempt++;
+			}else {
+				break;
+			}
+		}
+	}
+	
 	
 	public List<String> getCurrentPackageAndActivity(){
 		List<String> packageAndActivity = new ArrayList<String>();

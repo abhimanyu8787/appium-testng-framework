@@ -25,6 +25,8 @@ import org.openqa.selenium.WebElement;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import appium.nykaa.pojos.Address;
+
 
 public class Utility {
     
@@ -118,6 +120,35 @@ public class Utility {
                 new TypeReference<List<HashMap<String, String>>>() {
                 });
         return data;
+    }
+    
+    public static List<HashMap<String, String>> getJsonDataToMap(File file) throws IOException {
+        String jsonContent = FileUtils.readFileToString(file, StandardCharsets.UTF_8);
+
+        ObjectMapper mapper = new ObjectMapper();
+        List<HashMap<String, String>> data = mapper.readValue(jsonContent,
+                new TypeReference<List<HashMap<String, String>>>() {
+                });
+        return data;
+    }
+    
+    public static <T> T getJsonDataToObject(String filePath, Class<T> returnObjectType) throws IOException {
+    	String jsonContent = FileUtils.readFileToString(new File(filePath), StandardCharsets.UTF_8);
+    	ObjectMapper mapper = new ObjectMapper();
+    	return mapper.readValue(jsonContent, returnObjectType);
+    }
+    /**
+     * This method is used to convert json file to java object
+     * @param <T>: Generic class in which json is intended to be converted
+     * @param file
+     * @param returnObjectType
+     * @return
+     * @throws IOException
+     */
+    public static <T> T getJsonDataToObject(File file, Class<T> returnObjectType) throws IOException {
+    	String jsonContent = FileUtils.readFileToString(file, StandardCharsets.UTF_8);
+    	ObjectMapper mapper = new ObjectMapper();
+    	return mapper.readValue(jsonContent, returnObjectType);
     }
     
     public static File readFileFromTestData(String name) throws Exception {

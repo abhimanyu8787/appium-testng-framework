@@ -1,18 +1,24 @@
 package appium.nykaa.tests;
 
+import java.io.File;
 import java.util.List;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import appium.nykaa.pojos.Address;
 import appium.nykaa.pojos.ProductCard;
+import appium.nykaa.screenactions.NykaaAccountsScreenActions;
 import appium.nykaa.screenactions.NykaaProStoreScreenActions;
 import appium.nykaa.screenactions.NykaaProductListScreenActions;
 import appium.nykaa.screenactions.NykaaProductPageScreenActions;
 import appium.nykaa.screenactions.NykaaShoppingBagScreenActions;
 import appium.utils.AndroidBaseTest;
 import appium.utils.EnumClass.AndroidDeviceButtons;
+import appium.utils.EnumClass.NykaaAccountsMenu;
+import appium.utils.EnumClass.NykaaBottomMenu;
 import appium.utils.EnumClass.NykaaSearchBoxPlaceholders;
 import appium.utils.EnumClass.NykaaStoresTitle;
+import appium.utils.Utility;
 
 public class NykaaStoreSelectorTestcases extends AndroidBaseTest{
 	
@@ -20,9 +26,11 @@ public class NykaaStoreSelectorTestcases extends AndroidBaseTest{
 	public NykaaShoppingBagScreenActions nykaaShoppingBag;
 	public NykaaProductListScreenActions nykaaProductList;
 	public NykaaProductPageScreenActions nykaaProductPage;
+	public NykaaAccountsScreenActions nykaaAccountsScreen;
 	
 	@Test
 	public void store_selector_ui_validations() throws Exception {
+		nykaaHomeScreenActions.closeUnwantedPopup();
 		Assert.assertEquals(nykaaHomeScreenActions.getSearchBoxPlaceholderText(), NykaaSearchBoxPlaceholders.NYKAA.getOption(), "Verify if user is landed on nykaa store page");
 		nykaaHomeScreenActions.clickStoreSelectorDropdown();
 		Assert.assertEquals(nykaaHomeScreenActions.getNykaProStoreHeadline(), NykaaStoresTitle.STORE_SELECTOR_TITLE.getOption(), "Verify if store selector title is displayed in dropdown");
@@ -46,6 +54,7 @@ public class NykaaStoreSelectorTestcases extends AndroidBaseTest{
 	
 	@Test
 	public void nykaa_pro_store_ui_validations() throws Exception {
+		nykaaHomeScreenActions.closeUnwantedPopup();
 		Assert.assertEquals(nykaaHomeScreenActions.getSearchBoxPlaceholderText(), NykaaSearchBoxPlaceholders.NYKAA.getOption(), "Verify if user is landed on nykaa store page");
 		nykaaHomeScreenActions.clickStoreSelectorDropdown();
 		nykaaProStore = nykaaHomeScreenActions.navigateToNykaProStore();
@@ -69,6 +78,7 @@ public class NykaaStoreSelectorTestcases extends AndroidBaseTest{
 	
 	@Test
 	public void nykaa_pro_faq_section_validations() throws Exception {
+		nykaaHomeScreenActions.closeUnwantedPopup();
 		Assert.assertEquals(nykaaHomeScreenActions.getSearchBoxPlaceholderText(), NykaaSearchBoxPlaceholders.NYKAA.getOption(), "Verify if user is landed on nykaa store page");
 		nykaaHomeScreenActions.clickStoreSelectorDropdown();
 		nykaaProStore = nykaaHomeScreenActions.navigateToNykaProStore();
@@ -80,7 +90,18 @@ public class NykaaStoreSelectorTestcases extends AndroidBaseTest{
 	}
 	
 	@Test
+	public void nykaa_set_addresses() throws Exception {
+		nykaaHomeScreenActions.closeUnwantedPopup();
+		nykaaAccountsScreen = nykaaHomeScreenActions.clickBottomMenu(NykaaBottomMenu.ACCOUNT.getOption(), NykaaAccountsScreenActions.class);
+		nykaaAccountsScreen.clickAccountMenuOption(NykaaAccountsMenu.ADDRESS.getOption());
+		File testData = Utility.readFileFromTestData("nykaa-addresses.json");
+		Address testAddress = Utility.getJsonDataToObject(testData, Address.class);
+		nykaaAccountsScreen.addNewAddress(testAddress.getAddresses().get(0).getPincode(), testAddress.getAddresses().get(0).getAddressLine1(), testAddress.getAddresses().get(0).getAddressLine2(), testAddress.getAddresses().get(0).getContactName(), testAddress.getAddresses().get(0).getContactNumber());
+	}
+	
+	@Test
 	public void nykaa_place_order_validations() throws Exception {
+		nykaaHomeScreenActions.closeUnwantedPopup();
 		nykaaShoppingBag = nykaaHomeScreenActions.navigateToShoppingBag();
 		nykaaShoppingBag.clearCart();
 		nykaaShoppingBag.pressKey(AndroidDeviceButtons.BACK.getOption());
@@ -88,15 +109,14 @@ public class NykaaStoreSelectorTestcases extends AndroidBaseTest{
 		nykaaProductList = nykaaHomeScreenActions.searchForProduct("Beauty Blender");
 		Assert.assertEquals("Beauty Blender", nykaaProductList.getShoppingPageSearchTitle(), "Search query should be displayed at top");
 		ProductCard beautyBlender = nykaaProductList.getProductCardDetails("1");
-		System.out.println(beautyBlender.toString());
 		nykaaProductPage = nykaaProductList.clickProduct("1");
 		nykaaProductPage.waitForNykaaLoaderToDisappear();
 		String displayedProductTitle = nykaaProductPage.getProductName();
 		String displayedProductRating = nykaaProductPage.getRatingStars();
-		//String displayedProductRatingCount = nykaaProductPage.getRatingCount();
+		String displayedProductRatingCount = nykaaProductPage.getRatingCount();
 		Assert.assertEquals(beautyBlender.getProductBrand()+" "+beautyBlender.getProductTitle(), displayedProductTitle, "Product name is in sync");
 		Assert.assertEquals(beautyBlender.getProductRating(), displayedProductRating, "Product rating is in sync");
-		//Assert.assertEquals(beautyBlender.getProductRatingCount(), displayedProductRatingCount, "Product rating count is in sync");
+		Assert.assertEquals(beautyBlender.getProductRatingCount(), displayedProductRatingCount, "Product rating count is in sync");
 		nykaaProductPage.addProductToBag();
 		nykaaShoppingBag = nykaaProductPage.navigateToShoppingBag();
 		String finalCartValue = beautyBlender.getProductPriceAfterDiscount().substring(1);
@@ -107,8 +127,6 @@ public class NykaaStoreSelectorTestcases extends AndroidBaseTest{
 		List<String> productsName = nykaaShoppingBag.getProductsName();
 		List<String> productsPrice = nykaaShoppingBag.getProductsPrice();
 		List<String> productsFinalPrice = nykaaShoppingBag.getProductsFinalPrice();
-		
-		
 	}
 	
 }

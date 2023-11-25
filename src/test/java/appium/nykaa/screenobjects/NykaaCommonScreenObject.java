@@ -16,5 +16,7 @@ public class NykaaCommonScreenObject {
 	public final By storeselector_store_selector_replace = AppiumBy.xpath("(//android.widget.ImageView[@resource-id='com.fsn.nykaa:id/next'])[replace]");
 	public final By storeselector_nykaapro_title = AppiumBy.id("com.fsn.nykaa:id/title");
 	public final By shoppingBag = AppiumBy.id("com.fsn.nykaa:id/action_shopping_cart");
-
+	public final By goldMembershipUpgradeText = AppiumBy.id("com.fsn.nykaa:id/tv_subtitle");
+	public final By goldMembershipCrownIcon = AppiumBy.id("com.fsn.nykaa:id/fl_crown_image");
+	public final By crossIconGoldMembershipAd = AppiumBy.id("com.fsn.nykaa:id/cross");
 }
