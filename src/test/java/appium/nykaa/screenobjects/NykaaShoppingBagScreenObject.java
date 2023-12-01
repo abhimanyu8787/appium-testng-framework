@@ -37,4 +37,9 @@ public class NykaaShoppingBagScreenObject extends NykaaCommonScreenObject{
 	public final By deleteModal_AddToWishlistBtn = AppiumBy.id("com.fsn.nykaa:id/tv_ok");
 	
 	public final By saveShippingWarningMessage = AppiumBy.id("com.fsn.nykaa:id/tv_tooltip_text");
+	
+	public final By warningDialogueTitle = AppiumBy.id("com.fsn.nykaa:id/dialog_title");
+	public final By warningDialogueDesc = AppiumBy.id("com.fsn.nykaa:id/dialog_description");
+	public final By warningDialogueOkBtn = AppiumBy.id("com.fsn.nykaa:id/dialog_cancel");
+	public final By warningDialogueImage = AppiumBy.id("com.fsn.nykaa:id/dialog_image");
 }

@@ -64,5 +64,25 @@ public class NykaaShoppingBagScreenActions extends NykaaCommonScreenActions{
 	public void getProductsInBagCount() {
 		
 	}
+	
+	public boolean getIsWarningDialogueDisplayed() {
+		return getIsElementDisplayed(nykaaShoppingBag.warningDialogueTitle) && 
+		getIsElementDisplayed(nykaaShoppingBag.warningDialogueImage) &&
+		getIsElementDisplayed(nykaaShoppingBag.warningDialogueDesc) &&
+		getIsElementDisplayed(nykaaShoppingBag.warningDialogueOkBtn);
+	}
+	
+	public String getWarningModalTitle() throws Exception {
+		return getElementText(nykaaShoppingBag.warningDialogueTitle);
+	}
+	
+	public String getWarningModalDescription() throws Exception {
+		return getElementText(nykaaShoppingBag.warningDialogueDesc);
+
+	}
+	
+	public void clickWarningModalOkButton() throws Exception {
+		clickElement(nykaaShoppingBag.warningDialogueOkBtn);
+	}
 
 }

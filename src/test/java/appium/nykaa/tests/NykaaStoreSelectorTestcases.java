@@ -1,7 +1,10 @@
 package appium.nykaa.tests;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
+
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -13,12 +16,14 @@ import appium.nykaa.screenactions.NykaaProductListScreenActions;
 import appium.nykaa.screenactions.NykaaProductPageScreenActions;
 import appium.nykaa.screenactions.NykaaShoppingBagScreenActions;
 import appium.utils.AndroidBaseTest;
+import appium.utils.RestAssuredUtility;
 import appium.utils.EnumClass.AndroidDeviceButtons;
 import appium.utils.EnumClass.NykaaAccountsMenu;
 import appium.utils.EnumClass.NykaaBottomMenu;
 import appium.utils.EnumClass.NykaaSearchBoxPlaceholders;
 import appium.utils.EnumClass.NykaaStoresTitle;
 import appium.utils.Utility;
+import io.restassured.response.Response;
 
 public class NykaaStoreSelectorTestcases extends AndroidBaseTest{
 	
@@ -94,9 +99,26 @@ public class NykaaStoreSelectorTestcases extends AndroidBaseTest{
 		nykaaHomeScreenActions.closeUnwantedPopup();
 		nykaaAccountsScreen = nykaaHomeScreenActions.clickBottomMenu(NykaaBottomMenu.ACCOUNT.getOption(), NykaaAccountsScreenActions.class);
 		nykaaAccountsScreen.clickAccountMenuOption(NykaaAccountsMenu.ADDRESS.getOption());
+		nykaaAccountsScreen.deleteNonDefaultAddresses();
+		
 		File testData = Utility.readFileFromTestData("nykaa-addresses.json");
 		Address testAddress = Utility.getJsonDataToObject(testData, Address.class);
 		nykaaAccountsScreen.addNewAddress(testAddress.getAddresses().get(0).getPincode(), testAddress.getAddresses().get(0).getAddressLine1(), testAddress.getAddresses().get(0).getAddressLine2(), testAddress.getAddresses().get(0).getContactName(), testAddress.getAddresses().get(0).getContactNumber());
+		nykaaAccountsScreen.waitForSeconds(2);
+		nykaaAccountsScreen.clickAccountMenuOption(NykaaAccountsMenu.ADDRESS.getOption());
+		//verify if address is added successfully
+		List<HashMap<String, String>> displayedAddresses = nykaaAccountsScreen.getAddedAddresses();
+		HashMap<String, String> displayedAddress = new HashMap<String, String>();
+		for(int i=0; i<displayedAddresses.size(); i++) {
+			displayedAddress = displayedAddresses.get(i);
+			String displayedContactName = displayedAddress.get("contactName");
+			if(displayedContactName.equals(testAddress.getAddresses().get(0).getContactName())) {
+				Assert.assertTrue(true, "Recently added address is displayed");
+				break;
+			}
+		}
+		
+		
 	}
 	
 	@Test
@@ -127,6 +149,35 @@ public class NykaaStoreSelectorTestcases extends AndroidBaseTest{
 		List<String> productsName = nykaaShoppingBag.getProductsName();
 		List<String> productsPrice = nykaaShoppingBag.getProductsPrice();
 		List<String> productsFinalPrice = nykaaShoppingBag.getProductsFinalPrice();
+		//check if default address is displayed
+		if(Integer.parseInt(finalCartValue)<299) {
+			nykaaShoppingBag.clickProceedButton();
+			Assert.assertTrue(nykaaShoppingBag.getIsWarningDialogueDisplayed());
+			Assert.assertEquals("Cannot Proceed", nykaaShoppingBag.getWarningModalTitle(), "Warning modal title is correct");
+			Assert.assertEquals("We are not accepting orders of subtotal less than 149", nykaaShoppingBag.getWarningModalDescription(), "Warning modal description is correct");
+			nykaaShoppingBag.clickWarningModalOkButton();
+			//increase product quantity until the total cart value is greater than 149
+		}
+		//click on proceed button
+		//verify if added address is displayed
+	}
+	
+	@Test
+	public void nykaa_order_list_testcase() throws Exception {
+		nykaaHomeScreenActions.closeUnwantedPopup();
+		Response apiResponse = RestAssuredUtility.getOrderListAPIResponse();
+		List<String> orderList = apiResponse.getBody().jsonPath().get("data.orderList.orderNo");
+		nykaaAccountsScreen = nykaaHomeScreenActions.clickBottomMenu(NykaaBottomMenu.ACCOUNT.getOption(), NykaaAccountsScreenActions.class);
+		nykaaAccountsScreen.clickAccountMenuOption(NykaaAccountsMenu.ORDERS.getOption());
+		//nykaaAccountsScreen.clickOrderDetailsBtn(Integer.toString(1));
+		Set<String> handles = driver.getContextHandles();
+		for(String str: handles) {
+			System.out.println(str);
+		}
+		List<String> displayedOrderList = nykaaAccountsScreen.getOrderIdList();
+		for(int i = 0; i<displayedOrderList.size(); i++) {
+			Assert.assertEquals(displayedOrderList.get(i), orderList.get(i));
+		}
 	}
 	
 }

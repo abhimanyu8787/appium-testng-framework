@@ -18,6 +18,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -854,6 +855,25 @@ public class AndroidGenericMethods {
 		int midPointX = x/2;
 		int midPointY = y/2;
 		clickGesture(midPointX, midPointY);
+	}
+	
+	public boolean getIsChildElementDisplayed(By parentLocator, By childLocator) {
+		WebElement parentElement = driver.findElement(parentLocator);
+		try {
+			WebElement childElement = parentElement.findElement(childLocator);
+			return isElementDisplayed(childElement);
+		} catch (NoSuchElementException e) {
+			return false;
+		}
+	}
+	
+	public boolean getIsChildElementDisplayed(WebElement parentElement, By childLocator) {
+		try {
+			WebElement childElement = parentElement.findElement(childLocator);
+			return isElementDisplayed(childElement);
+		} catch (NoSuchElementException e) {
+			return false;
+		}
 	}
 
 }
